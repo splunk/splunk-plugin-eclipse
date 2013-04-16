@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Splunk plug-in for Eclipse - code templates
+Bundle-SymbolicName: com.splunk.dev.sdk.java.templates
+Bundle-Version: 0.1
+Bundle-Activator: com.splunk.dev.sdk.java.templates.Activator
+Bundle-Vendor: Splunk, Inc.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

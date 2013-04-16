@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.eclipse.jdt.ui.java"
+            class="com.splunk.dev.sdk.java.ui.JavaSDKProjectWizard"
+            finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            id="com.splunk.dev.sdk.java.ui.wizard.JavaSDKWizard"
+            name="Splunk SDK for Java project"
+            project="true">
+      </wizard>
+   </extension>
+
+</plugin>
