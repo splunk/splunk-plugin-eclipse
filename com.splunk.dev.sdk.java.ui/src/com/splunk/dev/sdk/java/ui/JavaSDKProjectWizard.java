@@ -1,5 +1,6 @@
 package com.splunk.dev.sdk.java.ui;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageOne;
 import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageTwo;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -8,9 +9,7 @@ import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 
 public class JavaSDKProjectWizard extends Wizard implements INewWizard {
-    private NewJavaProjectWizardPageOne pageOne;
-    private NewJavaProjectWizardPageTwo pageTwo;
-    
+    private JavaSDKProjectWizardPage pageOne;
     
     public JavaSDKProjectWizard() {
         setWindowTitle(JavaSDKProjectWizardMessages.JavaSDKProjectWizard_WindowTitle);
@@ -20,12 +19,10 @@ public class JavaSDKProjectWizard extends Wizard implements INewWizard {
     public void addPages() {
         super.addPages();
         
-        pageOne = new NewJavaProjectWizardPageOne();
+        pageOne = new JavaSDKProjectWizardPage("New Splunk SDK for Java Project");
         addPage(pageOne);
-        pageTwo = new NewJavaProjectWizardPageTwo(pageOne);
-        addPage(pageTwo);
     }
-
+    
     @Override
     public void init(IWorkbench workbench, IStructuredSelection selection) {
         // TODO Auto-generated method stub
@@ -34,7 +31,13 @@ public class JavaSDKProjectWizard extends Wizard implements INewWizard {
 
     @Override
     public boolean performFinish() {
-        // TODO Auto-generated method stub
+    	JavaSDKProjectCreator creator = new JavaSDKProjectCreator(null);
+    	try {
+			creator.createProject(pageOne.getProjectName(), null);
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return true;
     }
 
