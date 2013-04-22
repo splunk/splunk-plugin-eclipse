@@ -1,8 +1,6 @@
 package com.splunk.dev.sdk.java.ui;
 
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageOne;
-import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageTwo;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;

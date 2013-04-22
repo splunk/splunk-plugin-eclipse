@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Splunk plugin for Eclipse - tests
+Bundle-SymbolicName: com.splunk.dev.sdk.java.test
+Bundle-Version: 0.1
+Bundle-Activator: com.splunk.dev.sdk.java.test.Activator
+Bundle-Vendor: Splunk, Inc.
+Require-Bundle: org.eclipse.core.runtime,
+ org.junit4;bundle-version="4.8.1",
+ com.splunk.dev.sdk.java.ui;bundle-version="0.1.0",
+ org.eclipse.core.resources;bundle-version="3.8.1",
+ org.eclipse.jdt.core;bundle-version="3.8.3"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

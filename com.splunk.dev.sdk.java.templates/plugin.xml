@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension
+         point="org.eclipse.ui.editors.templates">
+      <contextType
+            class="com.splunk.dev.sdk.java.templates.SplunkContextType"
+            id="splunk"
+            name="Splunk"
+            registryId="org.eclipse.jdt.ui.CompilationUnitEditor">
+      </contextType>
+      <include
+            file="templates/default-templates.xml"
+            translations="$nl$/templates/default-templates.properties">
+      </include>
+   </extension>
 
 </plugin>

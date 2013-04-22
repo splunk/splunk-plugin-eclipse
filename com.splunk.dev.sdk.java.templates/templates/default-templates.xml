@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+/*******************************************************************************
+ * [FIXME: Splunk copyright header]
+ *******************************************************************************/
+-->
+
+<templates>
+
+<template name="service" 
+    description="%Templates.service" 
+    id="com.splunk.dev.sdk.java.templates.service"
+    context="splunk"
+    enabled="true" 
+    autoinsert="false">\\ Get a Splunk.ServiceArgs somewhere</template>
+</templates>
