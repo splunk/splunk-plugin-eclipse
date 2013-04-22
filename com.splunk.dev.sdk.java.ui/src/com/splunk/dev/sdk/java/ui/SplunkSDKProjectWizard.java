@@ -13,6 +13,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -124,7 +125,7 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 				@Override
 				protected void execute(IProgressMonitor monitor) throws CoreException,
 						InvocationTargetException, InterruptedException {
-					monitor.beginTask("Creating additional files", 300);
+					monitor.beginTask("Creating additional files", 400);
 					
 					IProject project = ((IJavaProject)getCreatedElement()).getProject();
 
@@ -138,6 +139,26 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 						addJarToProject(project, jsonJarFile, new SubProgressMonitor(monitor, 100));
 					}
 					
+					IJavaProject javaProject = (IJavaProject)getCreatedElement();
+					if (javaProject.findPackageFragmentRoot(javaProject.getPath()) != null) {
+						// Using the root of the project as the source directory. We must add
+						// lib/ where we placed the jars to the exclusion list for the source path.
+						IClasspathEntry[] entries = javaProject.getRawClasspath();
+						for (int i = 0; i < entries.length; i++) {
+							IClasspathEntry entry = entries[i];
+							if (entry.getPath().equals(javaProject.getPath()) &&
+									entry.getEntryKind() == IClasspathEntry.CPE_SOURCE) {
+								IPath[] oldExclusions = entry.getExclusionPatterns();
+								IPath[] newExclusions = new IPath[oldExclusions.length+1];
+								System.arraycopy(oldExclusions, 0, newExclusions, 0, oldExclusions.length);
+								newExclusions[oldExclusions.length] = project.getFolder("lib").getFullPath();
+								entries[i] = JavaCore.newSourceEntry(entry.getPath(), newExclusions);
+								javaProject.setRawClasspath(entries, new SubProgressMonitor(monitor, 100));
+								break;
+							}
+						}
+					}
+							
 					monitor.done();
 				}
 			};
