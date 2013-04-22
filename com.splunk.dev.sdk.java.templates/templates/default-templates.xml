@@ -8,13 +8,12 @@
 
 <templates>
 
-<template name="service" 
+<template name="splunkservice" 
     description="%Templates.service" 
     id="com.splunk.dev.sdk.java.templates.service"
-    context="splunk"
+    context="java-statements"
     enabled="true" 
-    autoinsert="false">
-    ServiceArgs serviceArgs = new ServiceArgs();
+    autoinsert="true">ServiceArgs serviceArgs = new ServiceArgs();
     // Get credentials somewhere.
     Service service = new Serice(serviceArgs);</template>
 </templates>

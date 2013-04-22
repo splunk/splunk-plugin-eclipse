@@ -147,7 +147,7 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 				return true;
 			} catch (InvocationTargetException e) { // One of the steps resulted in a core exception
 				Throwable t = e.getTargetException();
-				StatusManager.getManager().handle(new Status(Status.ERROR, Activator.PLUGIN_ID, "Error in configuring new Splunk SDK for Java project", e), StatusManager.SHOW);
+				StatusManager.getManager().handle(new Status(Status.ERROR, Activator.PLUGIN_ID, "Error in configuring new Splunk SDK for Java project", t), StatusManager.SHOW);
 				return false;
 			} catch (InterruptedException e) {
 				return false;
