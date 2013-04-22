@@ -1,0 +1,82 @@
+package com.splunk.dev.sdk.java.ui;
+
+import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageOne;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+
+import com.splunk.dev.sdk.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
+
+public class NewSplunkSDKProjectWizardPageOne extends
+		NewJavaProjectWizardPageOne {
+	public SplunkSDKProjectCreationOptions options;
+	
+	public NewSplunkSDKProjectWizardPageOne(SplunkSDKProjectCreationOptions options) {
+		this.options = options;
+	}
+	
+	public Control createOptionalJarsControl(Composite parent) {
+		Group optionalJarsGroup = new Group(parent, SWT.NONE);
+		
+		optionalJarsGroup.setFont(parent.getFont());
+		optionalJarsGroup.setText("Add optional Splunk data format support");
+		optionalJarsGroup.setLayout(new GridLayout(1, false));
+		
+		final Label explanationLabel = new Label(optionalJarsGroup, SWT.WRAP);
+		explanationLabel.setText("Splunk defaults to XML as its wire format. If you want to use its alternate " +
+		                 "formats (JSON or CSV) you need to add jars so Java can parse these formats.");
+		explanationLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		final Button supportJsonButton = new Button(optionalJarsGroup, SWT.CHECK);
+		supportJsonButton.setText("Add JSON support to project (optional)");
+		supportJsonButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		supportJsonButton.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				options.supportJson = supportJsonButton.getSelection();
+			}
+		});
+
+		final Button supportCsvButton = new Button(optionalJarsGroup, SWT.CHECK);
+		supportCsvButton.setText("Add CSV support to project (optional)");
+		supportCsvButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		supportCsvButton.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				options.supportCsv = supportCsvButton.getSelection();
+			}
+		});
+		
+		return optionalJarsGroup;	
+	}
+	
+	@Override
+	public void createControl(Composite parent) {
+		super.createControl(parent);
+		
+		Composite composite = (Composite)getControl();
+		
+		Control optionalJarsControl = createOptionalJarsControl(composite);
+		optionalJarsControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+	}
+
+}

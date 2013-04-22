@@ -5,19 +5,10 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             category="org.eclipse.jdt.ui.java"
-            class="com.splunk.dev.sdk.java.ui.JavaSDKProjectWizard"
+            class="com.splunk.dev.sdk.java.ui.SplunkSDKProjectWizard"
             finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
-            id="com.splunk.dev.sdk.java.ui.wizard.JavaSDKWizard"
+            id="com.splunk.dev.sdk.java.ui.wizard.SplunkSDKProjectWizard"
             name="Splunk SDK for Java project"
-            project="true">
-      </wizard>
-      <wizard
-            category="org.eclipse.jdt.ui.java"
-            class="com.splunk.dev.sdk.java.ui.ExampleJavaWizard"
-            finalPerspective=" "
-            hasPages="true"
-            id="com.splunk.dev.sdk.java.ui.exampleJavaWizard"
-            name="Example Java project wizard"
             project="true">
       </wizard>
    </extension>
