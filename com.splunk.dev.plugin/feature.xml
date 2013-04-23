@@ -2,7 +2,7 @@
 <feature
       id="com.splunk.dev.plugin"
       label="Splunk plugin for Eclipse"
-      version="0.1"
+      version="0.1.4"
       provider-name="Splunk, Inc.">
 
    <description url="http://www.example.com/description">
@@ -25,7 +25,6 @@
       <import plugin="org.eclipse.jdt.ui" version="3.8.2" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface.text"/>
       <import plugin="org.eclipse.core.resources" version="3.8.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.cdt.core" version="5.4.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide"/>
    </requires>
 
@@ -33,14 +32,14 @@
          id="com.splunk.dev.sdk.java.templates"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.0"
          unpack="false"/>
 
    <plugin
          id="com.splunk.dev.sdk.java.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.1.4"
          unpack="false"/>
 
 </feature>
