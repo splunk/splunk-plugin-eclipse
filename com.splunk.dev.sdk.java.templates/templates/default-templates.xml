@@ -21,7 +21,7 @@ under the License.
 <template name="splunkservice" 
     description="connect to a Splunk instance" 
     id="com.splunk.dev.sdk.java.templates.service"
-    context="java-statements"
+    context="java"
     enabled="true" 
     autoinsert="true">ServiceArgs serviceArgs = new ServiceArgs();
     // Get credentials somewhere.
@@ -30,7 +30,7 @@ under the License.
 <template name="splunksearch"
     description="create a Splunk search job"
     id="com.splunk.dev.sdk.java.templates.search"
-    context="java-statements"
+    context="java"
     enabled="true"
     autoinsert="true">$service$.getJobs().create();</template>
 </templates>
