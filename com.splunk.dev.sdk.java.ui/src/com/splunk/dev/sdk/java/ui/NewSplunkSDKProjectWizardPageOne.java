@@ -29,6 +29,12 @@ import org.eclipse.swt.widgets.Label;
 
 import com.splunk.dev.sdk.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
 
+/*
+ * NewSplunkSDKProjectWizardPageOne adds two check boxes in a group to the
+ * first page of the new Java project wizard. The new behavior is all called in
+ * createControl, which calls the superclass createControl, and then adds
+ * our own control (which is encapsulated in createOptionalJarsControl).
+ */
 public class NewSplunkSDKProjectWizardPageOne extends
 		NewJavaProjectWizardPageOne {
 	public SplunkSDKProjectCreationOptions options;

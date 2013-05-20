@@ -42,22 +42,28 @@ import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageTwo;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-/**
- * @author fross
- *
+/* (non-Javadoc)
+ * The SplunkSDKProjectWizard class implements a small extension to the 
+ * behavior of Eclipse's new Java project wizard. The wizard has two pages: 
+ * NewSplunkSDKProjectWizardPageOne, which subclasses 
+ * NewJavaProjectWizardPageOne and adds two additional controls to specify
+ * whether to support JSON and/or CSV as wire formats from Splunk in the new 
+ * project, and NewJavaProjectWizardPageTwo, which is the default page two from
+ * the new Java project wizard. The important behavior happens in the 
+ * performFinish method. 
  */
 @SuppressWarnings("restriction")
 public class SplunkSDKProjectWizard extends NewElementWizard implements
 		IExecutableExtension {
-	private NewSplunkSDKProjectWizardPageOne pageOne;
-	private NewJavaProjectWizardPageTwo pageTwo;
-	private SplunkSDKProjectCreationOptions options;
-	
 	public final static String splunkSDKJarFile = "splunk-sdk-java-1.1.jar";
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.1.jar";
 
+	// The two pages of this wizard
+	private NewSplunkSDKProjectWizardPageOne pageOne;
+	private NewJavaProjectWizardPageTwo pageTwo;
 	
+	// Code to maintain our extra state for the wizard.
 	public class SplunkSDKProjectCreationOptions {
 		public boolean supportJson;
 		public boolean supportCsv;
@@ -68,6 +74,8 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 		}
 	}
 
+	private SplunkSDKProjectCreationOptions options;
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.core.runtime.IExecutableExtension#setInitializationData(org.eclipse.core.runtime.IConfigurationElement, java.lang.String, java.lang.Object)
 	 */
@@ -104,35 +112,52 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 	 * @param monitor
 	 * @throws CoreException
 	 */
-	private void addJarToProject(IProject project, String jarName, IProgressMonitor monitor) throws CoreException {
+	private void addJarToProject(IProject project, String jarName,
+			IProgressMonitor monitor) throws CoreException {
+		// Ensure the lib/ folder exists in the project.
 		IFolder lib = project.getFolder("lib");
 		if (!lib.exists()) {
 			lib.create(true, true, new SubProgressMonitor(monitor, 100));
 		}
 
+		// Assemble all the paths and data for the new jar. Eclipse doesn't
+		// have a way to copy files from plug-ins. Instead, we open an
+		// InputStream on the source and create the destination file with
+		// that InputStream as its state.
 		IFile destination = project.getFile("lib" + File.separator + jarName);
 		URL url;
 		InputStream inputStream;
 
 		try {
-			inputStream = FileLocator.openStream(Platform.getBundle(Activator.PLUGIN_ID), new Path(jarName), false);
+			inputStream = FileLocator.openStream(
+					Platform.getBundle(Activator.PLUGIN_ID), 
+					new Path(jarName), 
+					false
+			);
 		} catch (Throwable e) {
-			throw new CoreException(new Status(Status.ERROR, Activator.PLUGIN_ID, "Error opening jar for copying", e));
+			throw new CoreException(new Status(Status.ERROR, 
+					Activator.PLUGIN_ID, "Error opening jar for copying", e));
 		}
 
-		destination.create(inputStream, false, new SubProgressMonitor(monitor, 100));
+		destination.create(inputStream, false, 
+				new SubProgressMonitor(monitor, 100));
 		
 		// Add the jar to the classpath
 		IJavaProject javaProject = JavaCore.create(project);
 		IClasspathEntry[] oldClassPath = javaProject.getRawClasspath();
-		IClasspathEntry[] newClassPath = new IClasspathEntry[oldClassPath.length+1];
+		IClasspathEntry[] newClassPath = 
+				new IClasspathEntry[oldClassPath.length+1];
 		System.arraycopy(oldClassPath, 0, newClassPath, 0, oldClassPath.length);
-		newClassPath[oldClassPath.length] = JavaCore.newLibraryEntry(destination.getFullPath(), null, null);
-		javaProject.setRawClasspath(newClassPath, new SubProgressMonitor(monitor, 100));
+		newClassPath[oldClassPath.length] = 
+				JavaCore.newLibraryEntry(destination.getFullPath(), null, null);
+		javaProject.setRawClasspath(newClassPath, 
+				new SubProgressMonitor(monitor, 100));
 	}
 	
 	@Override
 	public boolean performFinish() {
+		// Let the superclass performFinish run first, and then we'll make
+		// our additional changes to the project if it succeeds.
 		if (!super.performFinish()) {
 			return false; // Java project creation failed;
 		} else {
@@ -181,9 +206,16 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 			try {
 				getContainer().run(true, true, operation);
 				return true;
-			} catch (InvocationTargetException e) { // One of the steps resulted in a core exception
+			} catch (InvocationTargetException e) { 
+				// One of the steps resulted in a core exception
 				Throwable t = e.getTargetException();
-				StatusManager.getManager().handle(new Status(Status.ERROR, Activator.PLUGIN_ID, "Error in configuring new Splunk SDK for Java project", t), StatusManager.SHOW);
+				StatusManager.getManager().handle(new Status(
+						Status.ERROR, 
+						Activator.PLUGIN_ID, 
+						"Error in configuring new Splunk SDK for Java project", 
+						t), 
+					StatusManager.SHOW
+				);
 				return false;
 			} catch (InterruptedException e) {
 				return false;

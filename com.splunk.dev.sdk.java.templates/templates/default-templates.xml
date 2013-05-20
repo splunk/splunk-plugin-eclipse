@@ -18,6 +18,33 @@ under the License.
 
 <templates>
 
+<!--
+These are the templates that will appear in suggested completions in various
+Java contexts. For those adding new templates, the attributes of template are:
+
+* name: The text the user types to specify the template.
+* description: A human readable description showed in the autocomplete menu.
+* id: A unique identifier for this template in Eclipse
+  (typically com.splunk.sdk.java.templates.nameoftemplate)
+* context: The context in which this template will be suggested. The available
+  values are java (always show when editing Java files), java-members (show
+  when in at a point where only a class member makes sense), and
+  java-statements (show only when in a method where you are writing 
+  Java statements).
+* enabled: Use "true" if you want the template to be available.
+* autoinsert: Use "true". 
+
+Here is a blank template to start with (replace the parts in square brackets):
+
+<template name="splunk[template]"
+    description="]a human readable description]"
+    id="com.splunk.dev.sdk.java.templates.[template]"
+    context="[one of java, java-members, or java-statements]"
+    enabled="true"
+    autoinsert="true">[exact code to insert,
+    with no trailing newlines at the end]</template>
+-->
+
 <template name="splunkservice" 
     description="connect to a Splunk instance" 
     id="com.splunk.dev.sdk.java.templates.service"
@@ -33,4 +60,5 @@ under the License.
     context="java"
     enabled="true"
     autoinsert="true">$service$.getJobs().create();</template>
+    
 </templates>
