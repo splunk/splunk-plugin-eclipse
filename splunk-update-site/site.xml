@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.splunk.dev.plugin_0.1.5.jar" id="com.splunk.dev.plugin" version="0.1.5">
+   <feature url="features/com.splunk.dev.plugin_0.1.0.jar" id="com.splunk.dev.plugin" version="0.1">
       <category name="splunk"/>
    </feature>
    <category-def name="splunk" label="Splunk"/>

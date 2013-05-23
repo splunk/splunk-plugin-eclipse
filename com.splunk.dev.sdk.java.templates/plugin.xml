@@ -19,8 +19,7 @@ under the License.
    <extension
          point="org.eclipse.ui.editors.templates">
       <include
-            file="templates/default-templates.xml"
-            translations="$nl$/templates/default-templates.properties">
+            file="templates/default-templates.xml">
       </include>
    </extension>
 
