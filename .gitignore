@@ -1,3 +1,1 @@
 *.class
-splunk-update-site/*.jar
-splunk-update-site/**/*.jar
