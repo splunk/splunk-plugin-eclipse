@@ -21,12 +21,16 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 
+import com.splunk.dev.sdk.java.ui.SplunkSDKProjectWizard.LoggingFramework;
 import com.splunk.dev.sdk.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
 
 /*
@@ -90,6 +94,111 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		return optionalJarsGroup;	
 	}
 	
+	public Control createOptionalLoggingJarsControl(Composite parent) {
+		Group optionalLoggingGroup = new Group(parent, SWT.NONE);
+		
+		optionalLoggingGroup.setFont(parent.getFont());
+		optionalLoggingGroup.setText("Add support for logging libraries");
+		optionalLoggingGroup.setLayout(new GridLayout(1, false));
+		
+		final Label explanationLabel = new Label(optionalLoggingGroup, SWT.WRAP);
+		explanationLabel.setText("The Splunk plug-in for Eclipse can set up " +
+				"a logging library and code to log to Splunk and to create " +
+				"logging events following Splunk's Common Information Management " +
+				"recommendations");
+		explanationLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		
+		final Composite radioButtonRow = new Composite(optionalLoggingGroup, SWT.NULL);
+		radioButtonRow.setLayout(new RowLayout());
+		
+		final Button addLoggingSupport = new Button(radioButtonRow, SWT.CHECK);
+		addLoggingSupport.setText("Add logging support: ");
+		
+		final Button logbackButton = new Button(radioButtonRow, SWT.RADIO);
+		logbackButton.setText("Logback");
+		logbackButton.setSelection(true);
+		logbackButton.setEnabled(false);
+		logbackButton.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				if (logbackButton.getSelection()) {
+					options.loggingSupport = LoggingFramework.LOGBACK;
+				}
+			}
+		});
+		
+		final Button log4jButton = new Button(radioButtonRow, SWT.RADIO);
+		log4jButton.setText("Log4j");
+		log4jButton.setEnabled(false);		
+		log4jButton.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				if (log4jButton.getSelection()) {
+					options.loggingSupport = LoggingFramework.LOG4J;
+				}
+			}
+		});
+		
+		
+		final Button javaUtilButton = new Button(radioButtonRow, SWT.RADIO);
+		javaUtilButton.setText("java.util.logging");
+		javaUtilButton.setEnabled(false);
+		javaUtilButton.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				if (javaUtilButton.getSelection()) {
+					options.loggingSupport = LoggingFramework.JAVA_UTIL_LOGGING;
+				}
+			}
+		});
+	
+		
+		addLoggingSupport.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				log4jButton.setEnabled(addLoggingSupport.getSelection());
+				logbackButton.setEnabled(addLoggingSupport.getSelection());
+				javaUtilButton.setEnabled(addLoggingSupport.getSelection());
+				
+				if (addLoggingSupport.getSelection()) {
+					if (javaUtilButton.getSelection()) {
+						options.loggingSupport = LoggingFramework.JAVA_UTIL_LOGGING;
+					} else if (log4jButton.getSelection()) {
+						options.loggingSupport = LoggingFramework.LOG4J;
+					} else if (logbackButton.getSelection()) {
+						options.loggingSupport = LoggingFramework.LOGBACK;
+					}
+				} else {
+					options.loggingSupport = LoggingFramework.NONE;
+				}
+			}
+		});
+		
+		return (Control)optionalLoggingGroup;
+	}
+	
 	@Override
 	public void createControl(Composite parent) {
 		super.createControl(parent);
@@ -98,6 +207,9 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		
 		Control optionalJarsControl = createOptionalJarsControl(composite);
 		optionalJarsControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		Control optionalLoggingControl = createOptionalLoggingJarsControl(composite);
+		optionalLoggingControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
 }

@@ -58,19 +58,43 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 	public final static String splunkSDKJarFile = "splunk-sdk-java-1.1.jar";
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.1.jar";
-
+	
+	public final static String sl4jApiJarFile = "slf4j-api-1.6.4.jar";
+	public final static String splunkLoggingJarFile = "splunklogging.jar";
+	
+	public final static String[] log4jJarFiles = {
+		"log4j-1.2.16.jar",
+		"slf4j-log4j12-1.6.4.jar"
+	};
+	public final static String log4jConfigFile = "log4j.properties";
+	
+	public final static String[] logbackJarFiles = {
+		"logback-classic-1.0.0.jar",
+		"logback-core-1.0.0.jar"
+	};
+	public final static String logbackConfigFile = "logback.xml";
+	
+	public final static String[] javaUtilJarFiles = {
+		"slf4j-jdk14-1.6.4.jar"
+	};
+	public final static String javaUtilConfigFile = "jdklogging.properties";
+	
 	// The two pages of this wizard
 	private NewSplunkSDKProjectWizardPageOne pageOne;
 	private NewJavaProjectWizardPageTwo pageTwo;
+	
+	public enum LoggingFramework { LOG4J, LOGBACK, JAVA_UTIL_LOGGING, NONE };
 	
 	// Code to maintain our extra state for the wizard.
 	public class SplunkSDKProjectCreationOptions {
 		public boolean supportJson;
 		public boolean supportCsv;
+		public LoggingFramework loggingSupport;
 		
 		public SplunkSDKProjectCreationOptions() {
 			supportJson = false;
 			supportCsv = false;
+			loggingSupport = LoggingFramework.NONE;
 		}
 	}
 
@@ -104,6 +128,33 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 		return super.performCancel();
 	}
 
+	private IFile addFileToProject(IProject project, String sourcePath,
+			String destinationPath, IProgressMonitor monitor) throws CoreException {
+		// Assemble all the paths and data for the new file. Eclipse doesn't
+		// have a way to copy files from plug-ins. Instead, we open an
+		// InputStream on the source and create the destination file with
+		// that InputStream as its state.
+		IFile destination = project.getFile(destinationPath);
+		URL url;
+		InputStream inputStream;
+
+		try {
+			inputStream = FileLocator.openStream(
+					Platform.getBundle(Activator.PLUGIN_ID), 
+					new Path("resources" + File.separator + sourcePath), 
+					false
+					);
+		} catch (Throwable e) {
+			throw new CoreException(new Status(Status.ERROR, 
+					Activator.PLUGIN_ID, "Error opening jar for copying", e));
+		}
+		
+		destination.create(inputStream, false, 
+				new SubProgressMonitor(monitor, 100));
+		
+		return destination;
+	}
+	
 	/**
 	 * Copy a jar from the plugin into the lib/ directory of the project.
 	 * 
@@ -120,27 +171,12 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 			lib.create(true, true, new SubProgressMonitor(monitor, 100));
 		}
 
-		// Assemble all the paths and data for the new jar. Eclipse doesn't
-		// have a way to copy files from plug-ins. Instead, we open an
-		// InputStream on the source and create the destination file with
-		// that InputStream as its state.
-		IFile destination = project.getFile("lib" + File.separator + jarName);
-		URL url;
-		InputStream inputStream;
-
-		try {
-			inputStream = FileLocator.openStream(
-					Platform.getBundle(Activator.PLUGIN_ID), 
-					new Path(jarName), 
-					false
-			);
-		} catch (Throwable e) {
-			throw new CoreException(new Status(Status.ERROR, 
-					Activator.PLUGIN_ID, "Error opening jar for copying", e));
-		}
-
-		destination.create(inputStream, false, 
-				new SubProgressMonitor(monitor, 100));
+		IFile destination = 
+				addFileToProject(project, 
+						jarName,
+						"lib" + File.separator + jarName, 
+						new SubProgressMonitor(monitor, 100)
+				);
 		
 		// Add the jar to the classpath
 		IJavaProject javaProject = JavaCore.create(project);
@@ -179,6 +215,42 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 						addJarToProject(project, jsonJarFile, new SubProgressMonitor(monitor, 100));
 					}
 					
+					// Add logging support
+					if (options.loggingSupport == LoggingFramework.LOGBACK) {
+						for (String jarFile : logbackJarFiles) {
+							addJarToProject(project, jarFile, new SubProgressMonitor(monitor, 100));
+						}
+						addFileToProject(project, 
+								logbackConfigFile, 
+								logbackConfigFile,
+								new SubProgressMonitor(monitor, 100)
+						);
+					} else if (options.loggingSupport == LoggingFramework.LOG4J) {
+						for (String jarFile : log4jJarFiles) {
+							addJarToProject(project, jarFile, new SubProgressMonitor(monitor, 100));
+						}
+						addFileToProject(project, 
+								log4jConfigFile,
+								log4jConfigFile,
+								new SubProgressMonitor(monitor, 100)
+						);
+					} else if (options.loggingSupport == LoggingFramework.JAVA_UTIL_LOGGING) {
+						for (String jarFile : javaUtilJarFiles) {
+							addJarToProject(project, jarFile, new SubProgressMonitor(monitor, 100));
+						}
+						addFileToProject(project, 
+								javaUtilConfigFile, 
+								javaUtilConfigFile,
+								new SubProgressMonitor(monitor, 100)
+						);
+					}
+					
+					if (options.loggingSupport != LoggingFramework.NONE) {
+						addJarToProject(project, sl4jApiJarFile, new SubProgressMonitor(monitor, 100));
+						addJarToProject(project, splunkLoggingJarFile, new SubProgressMonitor(monitor, 100));
+					}
+					
+					// Handle the case when the root directory of the project is the source directory.
 					IJavaProject javaProject = (IJavaProject)getCreatedElement();
 					if (javaProject.findPackageFragmentRoot(javaProject.getPath()) != null) {
 						// Using the root of the project as the source directory. We must add
