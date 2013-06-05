@@ -7,6 +7,8 @@ import org.eclipse.debug.internal.ui.SWTFactory;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
@@ -41,11 +43,18 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 		label.setLayoutData(new GridData());
 		label.setText("Host:");
 		
+		ModifyListener modifyListener = new ModifyListener() {
+			public void modifyText(ModifyEvent evt) {
+				scheduleUpdateJob();
+			}
+		};
+		
 		hostTextbox = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData();
 		gd.grabExcessHorizontalSpace = true;
 		gd.horizontalAlignment = GridData.FILL;
 		hostTextbox.setLayoutData(gd);
+		hostTextbox.addModifyListener(modifyListener);
 		
 		label = new Label(comp, SWT.RIGHT);
 		label.setLayoutData(new GridData());
@@ -56,6 +65,7 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 		gd.grabExcessHorizontalSpace = true;
 		gd.horizontalAlignment = GridData.FILL;
 		portTextbox.setLayoutData(gd);
+		portTextbox.addModifyListener(modifyListener);
 		portTextbox.addVerifyListener(new VerifyListener() {
 			@Override
 			public void verifyText(VerifyEvent e) {
@@ -122,12 +132,25 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 	
 	@Override
 	public boolean isValid(ILaunchConfiguration launchConfig) {
+		setErrorMessage(null);
+		if (!super.isValid(launchConfig)) {
+			return false;
+		}
 		try {
-			return super.isValid(launchConfig) &&
-					launchConfig.getAttribute(SplunkLaunchData.hostAttribute, "").length() > 0 &&
-					launchConfig.getAttribute(SplunkLaunchData.portAttribute, -1) > 0;
+			String host = launchConfig.getAttribute(SplunkLaunchData.hostAttribute, "");
+			if (host.length() <= 0) {
+				setErrorMessage("Host name cannot be empty.");
+				return false;
+			}
+			
+			int port = launchConfig.getAttribute(SplunkLaunchData.portAttribute, -1);
+			if (port < 1) {
+				setErrorMessage("Port must be a positive integer.");
+				return false;
+			}
 		} catch (CoreException e) {
 			return false;
 		}
+		return true;
 	}
 }
