@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.ui.wizards.NewElementWizard;
 import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageTwo;
@@ -61,6 +62,8 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 	
 	public final static String sl4jApiJarFile = "slf4j-api-1.6.4.jar";
 	public final static String splunkLoggingJarFile = "splunklogging.jar";
+	
+	public final static String defaultProgramFile = "Program.java";
 	
 	public final static String[] log4jJarFiles = {
 		"log4j-1.2.16.jar",
@@ -270,7 +273,28 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 							}
 						}
 					}
-							
+					
+					String destination;
+					if (javaProject.findPackageFragment(javaProject.getPath()) != null) {
+						// Using the root of the project as a source directory.
+						addFileToProject(
+								project, 
+								defaultProgramFile, 
+								defaultProgramFile, 
+								new SubProgressMonitor(monitor, 100)
+						);
+					} else if (javaProject.getPackageFragmentRoot(javaProject.getPath() + File.separator + "src") != null) {
+						// Use the src/ directory.
+						addFileToProject(
+								project,
+								defaultProgramFile, 
+								"src" + File.separator + defaultProgramFile, 
+								new SubProgressMonitor(monitor, 100)
+						);
+					}
+					// If neither case applies, the user has done customization,
+					// is probably advanced, and doesn't need our template.
+					
 					monitor.done();
 				}
 			};
