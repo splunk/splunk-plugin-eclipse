@@ -276,6 +276,8 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 			};
 			
 			try {
+				// Fetch the IWizardContainer object that is running this wizard,
+				// and which accepts WorkspaceOperation objects to execute.
 				getContainer().run(true, true, operation);
 				return true;
 			} catch (InvocationTargetException e) { 

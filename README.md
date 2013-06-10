@@ -3,7 +3,8 @@
 #### Version 0.1
 
 The Splunk plug-in for Eclipse provides tooling to support creating projects 
-with the Splunk SDK for Java.
+with the Splunk SDK for Java and running Java applications with instrumentation
+on the JVM that logs the application's activity to Splunk.
 
 Splunk is a search engine and analytic environment that uses a distributed
 map-reduce architecture to efficiently index, search and process large 
@@ -23,12 +24,12 @@ are enabled by Splunk's unique capabilities.
 The Splunk plug-in for Eclipse provides extensions to the Eclipse environment
 to simplify creating projects using the Splunk SDK for Java. It provides a
 new "Splunk SDK for Java" project kind, a set of code templates for common
-tasks using the Splunk SDK for Java, and structured editors for Splunk search
-commands and time ranges.
+tasks using the Splunk SDK for Java, and a launcher for Java applications that
+logs JVM activity to a Splunk instance.
 
 The information in this Readme provides steps to get going quickly, but for more
 in-depth information be sure to visit the 
-[Splunk Developer Portal](http://dev.splunk.com/view/SP-CAAAEBB). 
+[Splunk Developer Portal](http://dev.splunk.com/). 
 
 ### Requirements
 
@@ -47,17 +48,178 @@ Splunk and system requirements, see
 
 #### Splunk plug-in for Eclipse
 
-You can install the Splunk plug-in for Eclipse via the Eclipse marketplace.
+You can install the Splunk plug-in for Eclipse via the Eclipse marketplace or
+by directly adding Splunk's p2 update site to your Eclipse instance.
 
-[TODO: instructions]
+In Eclipse, go to Help->Install new software.
 
-### Changelog
+![](imgs/installation-1.png)
+
+At the top of the dialog that opens, next to the combo box labeled "Work with:",
+is a button labeled "Add". 
+
+![](imgs/installation-2.png)
+
+Click that, and it brings up a dialog to enter the information for a new Eclipse
+update site. Name the site "Splunk", and put in 
+http://dev.splunk.com/[TODO: FIXME] in the Location box. Then hit okay.
+
+![](imgs/installation-3.png)
+
+If Eclipse doesn't automatically select the new Splunk site in the "Work with"
+box, click the combo box and select it. A single category, "Splunk", should
+appear in the main pane of the dialog. Check the box next to it, and hit Next.
+
+![](imgs/installation-4.png)
+
+Eclipse will calculate requirements and dependencies, then show you a list of
+the features to be installed. Hit Next again. 
+
+![](imgs/installation-5.png)
+
+Accept the terms of the licensing agreements, and hit Finish.
+
+![](imgs/installation-6.png)
+
+Eclipse will ask to restart. Tell it yes. When it restarts, the new plug-ins
+should be installed.
+
+### Creating a new Splunk SDK for Java project
+
+The Splunk SDK for Java project wizard creates a project with the Splunk SDK
+for Java jar included in the project and added to its classpath, and optionally
+support for parsing CSV and JSON and logging (with Logback, Log4j, or 
+java.util.logging) to Splunk.
+
+To create a new Splunk SDK for Java project, go to the File->New->Project...
+menu entry
+
+![](imgs/new_project-1.png)
+
+In the new project wizard, expand the Java category and select "Splunk SDK for
+Java project". Click Next. 
+
+![](imgs/new_project-2.png)
+
+In the Splunk SDK for Java project wizard, enter a name for your project, set 
+any Java project preferences you care for, and then choose which of the optional
+additional Splunk functionality you want.
+
+![](imgs/new_project-3.png)
+
+If you do not know whether you need Splunk support for JSON or CSV, then you 
+almost certainly don't (since Splunk's default and preferred wire format is 
+XML). If you are not planning to use a Java logging framework, you don't need
+logging support. If you are planning on using one, selecting the logging
+framework you want will add the jars for the framework, the jars for SL4J for 
+that framework, and a logging configuration file set to write its logs to a
+Splunk TCP input.
+
+When you have finished setting up your fields click Finish. Eclipse will create
+your new project with all the necessary libraries added to it.
+
+![](imgs/new_project-4.png)
+
+### Your first program using the Splunk SDK for Java
+
+The most common idioms for using the Splunk SDK for Java are included in this
+plug-in as templates. To write our first program, we will use two of these
+templates to connect to a Splunk instance, run a search, and print the results.
+
+In a new Splunk SDK for Java project created as described above, right click on
+the `src` folder and select New->Class.
+
+![](imgs/program-1.png)
+
+In the new class wizard, give your class a name (in this case `MyProgram`) and
+add a `main` method. Click Finish.
+
+![](imgs/program-2.png)
+
+In the editor for the new class, put your cursor in the `main` method and type
+`spl`. Then hit Ctrl+Space (or whatever you have autocomplete bound to in your
+Eclipse environment) to pop up a list of all the Splunk templates (which all
+begin with `spl`). 
+
+![](imgs/program-3.png)
+
+Select `splconnect`, and tab through the fields, filling in the values to
+connect to the Splunk instance you will be testing against. The default values
+for a local Splunk instance would be username `"admin"`, password `"changeme"`,
+host `"localhost"`, and port 8089.
+
+![](imgs/program-4.png)
+
+Then go to the bottom of the method, and type `sploneshot` and hit Ctrl+Space.
+
+![](imgs/program-5.png)
+
+It will expand into the code necessary to run a oneshot search and print the
+fields of each event returned by that search. 
+
+![](imgs/program-6.png)
+
+Set the search query to `"search index=_internal | head 5"`, and uncomment the
+`for` loop that iterates over the event fields, as shown. Save the file and run
+the program by clicking on the green arrow at the top of your Eclipse window.
+
+![](imgs/program-7.png)
+
+The program should run and in its console show a large number of key/value pairs
+from the search, which you can check against running the same search in Splunk's
+own UI.
+
+### Using Splunk's semantic logging support
+
+If you added logging support to your Splunk SDK for Java project, a set of
+templates provide a quick interface to creating structured log messages that
+follow Splunk's best practices for useful logging. The templates all begin with
+`cim`: `cimdebug`, `cimerror`, `ciminfo`, `cimtrace`, and `cimwarn`.
+
+![](imgs/log-1.png)
+
+These templates expand into a single command that creates a new 
+`SplunkLogEvent` and logs with via SL4J.
+
+![](imgs/log-2.png)
+
+`SplunkLogEvent` objects provide a large number of setters for common fields
+found in IT systems, or you can add any combination of key/value pairs with
+calls to `addPair`.
+
+### Running a Java application with the JVM activity logged to Splunk
+
+The Splunk plug-in for Eclipse allows you to log the JVM activity of any Java
+program, not just those using the Splunk SDK for Java, to a Splunk instance.
+
+Create a run configuration for your program by going to the 
+Run->Run configurations... menu.
+
+![](imgs/run-1.png)
+
+In the Run Configurations dialog, double click on "Monitored Java Application"
+to create a new run configuration. 
+
+![](imgs/run-2.png)
+
+Set up the run configuration as if it were the Java Application launcher, and
+then enter the host and port of a Splunk TCP input in the Splunk tab.
+
+![](imgs/run-3.png)
+
+Hit run and your program will start, while writing to Splunk. Note that testing
+this on a trivial program with no method entrances or exits and which runs only
+very briefly will likely log no data. The best program to test it on is one
+which calls a number of methods repeatedly forever, which should produce a
+steady stream of events in Splunk.
+
+## Changelog
 
 The **CHANGELOG.md** file in the root of the repository contains a description
 of changes for each version of the SDK. You can also find it online at 
 [https://github.com/splunk/splunk-eclipse/blob/master/CHANGELOG.md](https://github.com/splunk/splunk-eclipse/blob/master/CHANGELOG.md).
 
-### Branches
+## Branches
 
 The **master** branch always represents a stable and released version of the SDK.
 You can read more about our branching model on our Wiki at 
