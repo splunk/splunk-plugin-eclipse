@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>com.splunk.dev.sdk.java.test</name>
+	<comment></comment>
+	<projects>
+		<project>com.splunk.dev.sdk.java.templates</project>
+		<project>com.splunk.dev.sdk.java.ui</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.xored.q7.core.builder.q7Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.xored.q7.core.q7nature</nature>
+	</natures>
+</projectDescription>
