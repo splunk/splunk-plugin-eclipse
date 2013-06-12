@@ -102,8 +102,9 @@ Java project". Click Next.
 ![](imgs/new_project-2.png)
 
 In the Splunk SDK for Java project wizard, enter a name for your project, set 
-any Java project preferences you care for, and then choose which of the optional
-additional Splunk functionality you want.
+any Java project preferences you care for. The Splunk SDK for Java supports
+Java 1.6 and higher, so any JDK satisfying that requirement will work. Then
+choose which of the optional additional Splunk functionality you want.
 
 ![](imgs/new_project-3.png)
 
@@ -171,10 +172,11 @@ own UI.
 
 ### Using Splunk's semantic logging support
 
-If you added logging support to your Splunk SDK for Java project, a set of
-templates provide a quick interface to creating structured log messages that
-follow Splunk's best practices for useful logging. The templates all begin with
-`cim`: `cimdebug`, `cimerror`, `ciminfo`, `cimtrace`, and `cimwarn`.
+Splunk recommends using the [Common Information Model](http://docs.splunk.com/Documentation/Splunk/latest/Knowledge/UnderstandandusetheCommonInformationModel) for semantic logging. If you added logging support to your
+Splunk SDK for Java project, the Splunk plug-in for Eclipse provides a libraries
+and a set of templates to quickly create Common Information Model compliant log
+entries. The templates all begin with `cim`: `cimdebug`, `cimerror`, `ciminfo`,
+`cimtrace`, and `cimwarn`.
 
 ![](imgs/log-1.png)
 
@@ -199,7 +201,7 @@ will assume that you chose to use Logback support, for which the configuration
 file is called `logback.xml` in the root directory of your project. The 
 configuration file will be named differently for other logging frameworks.
 
-In `logback.xml`, you will fine an element `appender` with `name="splunkrawtcp"`.
+In `logback.xml`, you will find an element `appender` with `name="splunkrawtcp"`.
 This defines a log appender which writes to a Splunk TCP input. By default it
 writes to TCP port 5150 on `localhost`. You will need to add this input to your
 Splunk instance (or change the host and port elements to point to a TCP input).
@@ -240,13 +242,13 @@ steady stream of events in Splunk.
 
 The **CHANGELOG.md** file in the root of the repository contains a description
 of changes for each version of the SDK. You can also find it online at 
-[https://github.com/splunk/splunk-eclipse/blob/master/CHANGELOG.md](https://github.com/splunk/splunk-eclipse/blob/master/CHANGELOG.md).
+[https://github.com/splunk/splunk-plugin-eclipse/blob/master/CHANGELOG.md](https://github.com/splunk/splunk-plugin-eclipse/blob/master/CHANGELOG.md).
 
 ## Branches
 
 The **master** branch always represents a stable and released version of the SDK.
 You can read more about our branching model on our Wiki at 
-[https://github.com/splunk/splunk-eclipse/wiki/Branching-Model](https://github.com/splunk/splunk-eclipse/wiki/Branching-Model).
+[https://github.com/splunk/splunk-sdk-python/wiki/Branching-Model](https://github.com/splunk/splunk-sdk-python/wiki/Branching-Model).
 
 ## Documentation and resources
 If you need to know more: 
@@ -263,7 +265,14 @@ If you need to know more:
   [Splunk>Docs](http://docs.splunk.com/Documentation/Splunk).
 
 * For more about this SDK's repository, see our 
-  [GitHub Wiki](https://github.com/splunk/splunk-plugin-eclipse/wiki/).
+  [GitHub Wiki](https://github.com/splunk/splunk-plugin-eclipse/wiki).
+
+* For more information on the logging frameworks supported by the Splunk plug-in
+  for Eclipse, see:
+    * [SL4J](http://www.slf4j.org/)
+    * [Logback](http://logback.qos.ch/)
+    * [java.util.logging](http://docs.oracle.com/javase/6/docs/api/java/util/logging/package-summary.html)
+    * [Log4J](http://logging.apache.org/log4j/2.x/)
 
 ## Community
 
@@ -278,7 +287,7 @@ Stay connected with other developers building on Splunk.
 
 <tr>
 <td><b>Issues</b>
-<td><span>https://github.com/splunk/splunk-eclipse/issues/</span></td>
+<td><span>https://github.com/splunk/splunk-plugin-eclipse/issues</span></td>
 </tr>
 
 <tr>
@@ -308,6 +317,14 @@ If you would like to contribute to the SDK, go here for more information:
 * [Individual contributions](http://dev.splunk.com/goto/individualcontributions)
 
 * [Company contributions](http://dev.splunk.com/view/companycontributions/SP-CAAAEDR)
+
+### Support
+
+* Projects in Preview will not be Splunk supported. Once the Splunk plug-in for Eclipse
+   moves to an Open Beta we will provide more detail on support.  
+
+* Issues should be filed here: 
+  https://github.com/splunk/splunk-plugin-eclipse/issues
 
 ### Contact Us
 
