@@ -29,8 +29,7 @@
   
 <!--Splunk logger-->
   <logger name="splunk.logger" additivity="false" level="INFO">
-    <appender-ref ref="splunkrest"/>
-    <!-- <appender-ref ref="splunkrawtcp"/> -->
+    <appender-ref ref="splunkrawtcp"/>
   </logger>
   
 <!--Root logger-->

@@ -48,8 +48,8 @@ Splunk and system requirements, see
 
 #### Splunk plug-in for Eclipse
 
-You can install the Splunk plug-in for Eclipse via the Eclipse marketplace or
-by directly adding Splunk's p2 update site to your Eclipse instance.
+You can install the Splunk plug-in for Eclipse by directly adding Splunk's p2
+update site to your Eclipse instance.
 
 In Eclipse, go to Help->Install new software.
 
@@ -186,6 +186,29 @@ These templates expand into a single command that creates a new
 `SplunkLogEvent` objects provide a large number of setters for common fields
 found in IT systems, or you can add any combination of key/value pairs with
 calls to `addPair`.
+
+The logging template assume that there is a variable `logger` in scope of class
+`org.sl4j.Logger`. You can get one with the command
+
+    Logger logger = LoggerFactory.getLogger("nameOfLogger");
+
+and importing `org.sl4j.Logger` and `org.sl4j.LoggerFactory`. To actually make
+it log to Splunk, you need to do a little bit of configuration. The Splunk SDK
+for Java project wizard adds a default configuration file to your project. We
+will assume that you chose to use Logback support, for which the configuration
+file is called `logback.xml` in the root directory of your project. The 
+configuration file will be named differently for other logging frameworks.
+
+In `logback.xml`, you will fine an element `appender` with `name="splunkrawtcp"`.
+This defines a log appender which writes to a Splunk TCP input. By default it
+writes to TCP port 5150 on `localhost`. You will need to add this input to your
+Splunk instance (or change the host and port elements to point to a TCP input).
+See Splunk's [documentation](http://docs.splunk.com/Documentation/Splunk/5.0.3/Data/Monitornetworkports#Add_a_network_input_using_Splunk_Web)
+for instructions on how to set up a TCP input.
+
+Then in the `logger` element at the bottom of the file, change `splunk.logger`
+in the name attribute to whatever you chose as `nameOfLogger` when you created
+your `Logger` object above.
 
 ### Running a Java application with the JVM activity logged to Splunk
 
