@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.splunk.dev.plugin_0.1.0.jar" id="com.splunk.dev.plugin" version="0.1">
-      <category name="splunk"/>
-   </feature>
    <feature url="features/com.splunk.dev.agent_0.1.0.jar" id="com.splunk.dev.agent" version="0.1">
       <category name="splunk"/>
    </feature>
+   <feature url="features/com.splunk.dev.sdk.java_0.1.0.jar" id="com.splunk.dev.sdk.java" version="0.1"/>
    <category-def name="splunk" label="Splunk"/>
 </site>

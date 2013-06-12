@@ -15,8 +15,8 @@ License for the specific language governing permissions and limitations
 under the License.
 -->
 <feature
-      id="com.splunk.dev.plugin"
-      label="Splunk plugin for Eclipse"
+      id="com.splunk.dev.sdk.java"
+      label="Splunk SDK for Java support for Eclipse"
       version="0.1"
       provider-name="Splunk, Inc.">
 
