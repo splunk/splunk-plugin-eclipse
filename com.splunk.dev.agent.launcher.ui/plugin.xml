@@ -5,8 +5,8 @@
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
             class="com.splunk.dev.agent.launcher.ui.MonitoredLaunchConfigurationTabGroup"
-            id="com.splunk.dev.launcher.ui.exampleLaunchConfigurationTabGroup"
-            type="com.splunk.dev.launcher.exampleLaunchConfigurationType">
+            id="com.splunk.dev.launcher.ui.monitoredLaunchConfigurationTabGroup"
+            type="com.splunk.dev.launcher.monitoredLaunchConfigurationType">
       </launchConfigurationTabGroup>
    </extension>
 

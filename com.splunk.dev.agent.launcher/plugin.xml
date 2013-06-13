@@ -5,7 +5,7 @@
          point="org.eclipse.debug.core.launchConfigurationTypes">
       <launchConfigurationType
             delegate="com.splunk.dev.agent.launcher.MonitoredLaunchConfigurationTypeDelegate"
-            id="com.splunk.dev.launcher.exampleLaunchConfigurationType"
+            id="com.splunk.dev.launcher.monitoredLaunchConfigurationType"
             modes="run,debug"
             name="Monitored Java Application"
             public="true">
