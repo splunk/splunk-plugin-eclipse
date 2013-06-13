@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Splunk Monitored Java launcher UI
+Bundle-SymbolicName: com.splunk.agent.launcher.ui;singleton:=true
+Bundle-Version: 0.1
+Bundle-Activator: com.splunk.agent.launcher.ui.Activator
+Bundle-Vendor: Splunk, Inc.
+Require-Bundle: com.splunk.agent.launcher,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.jdt.launching;bundle-version="3.6.0",
+ org.eclipse.jdt.debug.ui;bundle-version="3.6.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
