@@ -232,6 +232,9 @@ then enter the host and port of a Splunk TCP input in the Splunk tab.
 
 ![](imgs/run-3.png)
 
+You will need to create the corresponding TCP input in your Splunk instance. See Splunk's [documentation](http://docs.splunk.com/Documentation/Splunk/5.0.3/Data/Monitornetworkports#Add_a_network_input_using_Splunk_Web)
+for instructions on how to set up a TCP input.
+
 Hit run and your program will start, while writing to Splunk. Note that testing
 this on a trivial program with no method entrances or exits and which runs only
 very briefly will likely log no data. The best program to test it on is one

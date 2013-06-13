@@ -1,6 +1,10 @@
 package com.splunk.dev.agent.launcher.ui;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.internal.ui.SWTFactory;
@@ -9,13 +13,18 @@ import org.eclipse.debug.ui.ILaunchConfigurationTab;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import com.splunk.dev.agent.launcher.SplunkLaunchData;
 
@@ -52,7 +61,7 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 		hostTextbox = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData();
 		gd.grabExcessHorizontalSpace = true;
-		gd.horizontalAlignment = GridData.FILL;
+		gd.horizontalAlignment = SWT.FILL;
 		hostTextbox.setLayoutData(gd);
 		hostTextbox.addModifyListener(modifyListener);
 		
@@ -63,7 +72,7 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 		portTextbox = new Text(comp, SWT.SINGLE | SWT.BORDER);
 		gd = new GridData();
 		gd.grabExcessHorizontalSpace = true;
-		gd.horizontalAlignment = GridData.FILL;
+		gd.horizontalAlignment = SWT.FILL;
 		portTextbox.setLayoutData(gd);
 		portTextbox.addModifyListener(modifyListener);
 		portTextbox.addVerifyListener(new VerifyListener() {
@@ -76,6 +85,35 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 
 				e.doit = textAfterEvent.matches("^[0-9]*$");
 			}
+		});
+		
+		Link helpLink = new Link(comp, SWT.CENTER);
+		gd = new GridData();
+		gd.horizontalSpan = 2;
+		gd.horizontalAlignment = SWT.CENTER;
+		helpLink.setLayoutData(gd);
+		helpLink.setText("See the <A href=\"http://docs.splunk.com/Documentation/Splunk/latest/Data/Monitornetworkports#Add_a_network_input_using_Splunk_Web\">Splunk documentation</A> on how to create a TCP input.");
+		helpLink.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+               widgetDefaultSelected(e);
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				try {
+					PlatformUI.getWorkbench().
+						getBrowserSupport().
+						getExternalBrowser().
+						openURL(new URL(e.text));
+				} catch (PartInitException pie) {
+					throw new AssertionError("Couldn't initialize a browser.");
+				} catch (MalformedURLException mue) {
+					throw new AssertionError("The URL in the code is malformed.");
+				}
+			}
+			
 		});
 		
 		setControl(comp);
