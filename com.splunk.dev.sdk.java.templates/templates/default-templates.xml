@@ -290,7 +290,7 @@ while (true) {
     }
 
     stream.close();
-    Thread.sleep(500);
+    Thread.sleep(2000);
 }</template>
 
 
@@ -416,7 +416,7 @@ reader.close();</template>
      id="com.splunk.dev.sdk.java.templates.cimdebug"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.debug(new SplunkLogEvent(${event_name}, ${event_id}) {{
+     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.debug(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
@@ -426,7 +426,7 @@ reader.close();</template>
      id="com.splunk.dev.sdk.java.templates.cimerror"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.error(new SplunkLogEvent(${event_name}, ${event_id}) {{
+     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.error(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
@@ -436,7 +436,7 @@ reader.close();</template>
      id="com.splunk.dev.sdk.java.templates.ciminfo"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.info(new SplunkLogEvent(${event_name}, ${event_id}) {{
+     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.info(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>    
@@ -446,7 +446,7 @@ reader.close();</template>
      id="com.splunk.dev.sdk.java.templates.cimtrace"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.trace(new SplunkLogEvent(${event_name}, ${event_id}) {{
+     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.trace(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
@@ -456,7 +456,7 @@ reader.close();</template>
      id="com.splunk.dev.sdk.java.templates.cimwarn"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.warn(new SplunkLogEvent(${event_name}, ${event_id}) {{
+     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.warn(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
