@@ -29,7 +29,7 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		ILaunchConfigurationDelegate {
 	protected File propertiesFile = null;
 	protected File jarFile = null;
-	
+		
 	@Override
 	public void launch(ILaunchConfiguration configuration, String mode,
 			ILaunch launch, IProgressMonitor monitor) throws CoreException {
@@ -37,6 +37,7 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		FileOutputStream jarOut;
 		try {
 			jarFile = File.createTempFile("splunkagent", ".jar");
+			jarFile.deleteOnExit();
 			jarOut = new FileOutputStream(jarFile);
 		} catch (IOException e) {
 			throw new CoreException(new Status(
@@ -87,6 +88,7 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		// Create the properties file
 		try {
 			propertiesFile = File.createTempFile("splunkagent", ".properties");
+			propertiesFile.deleteOnExit();
 			FileOutputStream out = new FileOutputStream(propertiesFile);
 			writeConfigurationToPropertiesFile(configuration, out);
 			out.close();
@@ -100,13 +102,6 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		}
 		
 		super.launch(configuration, mode, launch, monitor);
-		
-//		if (propertiesFile != null) {
-//			propertiesFile.delete();
-//		}
-//		if (jarFile != null) {
-//			jarFile.delete();
-//		}
 	}
 	
 	@Override
@@ -124,7 +119,7 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		try {
 			args = super.getVMArguments(configuration) + 
 					" -javaagent:" + jarFile.getCanonicalPath() +
-					"=" + propertiesFile.getCanonicalPath() +
+					"=\"" + propertiesFile.getCanonicalPath() + "\"" +
 					// This forces JDK 7 to use the JDK 6 bytecode verifier
 					// so that the splunkagent.jar will work with both.
 					" -XX:-UseSplitVerifier";	
