@@ -241,6 +241,34 @@ very briefly will likely log no data. The best program to test it on is one
 which calls a number of methods repeatedly forever, which should produce a
 steady stream of events in Splunk.
 
+### How to run the test suite
+
+The Splunk plug-in for Eclipse comes with a set of UI tests built in Xored's Q7. To run the tests, sign up for a Q7 account and download the Q7 IDE from [Xored](http://q7.xored.com/). Install the Splunk plug-in for Eclipse in a clean Eclipse IDE for Java. Fetch the Splunk Plug-in for Eclipse repository from GitHub.
+
+In Q7, add the `com.splunk.project.java.test` project to your workspace by going to File->Import... 
+
+![](imgs/q7-1.png)
+
+and selecting "Existing Projects into Workspace" in the General category. Click Next.
+
+![](imgs/q7-2.png)
+
+Click the Browse button to the right of the "Select root directory" text box, and navigate to the `com.splunk.project.java.test` directory in the Splunk Plug-in for Eclipse git repository. Click okay, and make sure the project test project is selected. Click Finish.
+
+![](imgs/q7-3.png)
+
+In the test, project right click on the 'Tests' entry and select Run As...->Test cases.
+
+![](imgs/q7-4.png)
+
+Q7 will show a dialog to add an application to test. Click Add... and select the directory of the Eclipse instance you installed the Splunk Plug-in for Eclipse in. Q7 will fill in the rest of the dialog automatically. Hit Finish.
+
+Select the newly created application in the dialog, and hit OK.
+
+![](imgs/q7-5.png)
+
+Q7 will load the Eclipse instance in which you installed the plug-in, and run through the tests. Leave your machine alone until it finishes. In Q7's Execution View it will show the results of running the tests.
+
 ## Changelog
 
 The **CHANGELOG.md** file in the root of the repository contains a description
