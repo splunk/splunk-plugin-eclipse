@@ -175,8 +175,8 @@ own UI.
 Splunk recommends using the [Common Information Model](http://docs.splunk.com/Documentation/Splunk/latest/Knowledge/UnderstandandusetheCommonInformationModel) for semantic logging. If you added logging support to your
 Splunk SDK for Java project, the Splunk plug-in for Eclipse provides a libraries
 and a set of templates to quickly create Common Information Model compliant log
-entries. The templates all begin with `cim`: `cimdebug`, `cimerror`, `ciminfo`,
-`cimtrace`, and `cimwarn`.
+entries. The templates all begin with `spog`: `spogdebug`, `spogerror`, `spoginfo`,
+`spogtrace`, and `spogwarn`.
 
 ![](imgs/log-1.png)
 
