@@ -411,7 +411,7 @@ for (SearchResults searchResults : reader) {
 reader.close();</template>
 
 <!-- CIM logging templates -->
-<template name="cimdebug"
+<template name="spogdebug"
      description="log a structured debug message"
      id="com.splunk.project.java.templates.cimdebug"
      context="java"
@@ -421,7 +421,7 @@ reader.close();</template>
      addPair(${key}, ${value});
 }}.toString());</template>
 
-<template name="cimerror"
+<template name="spogerror"
      description="log a structured error message"
      id="com.splunk.project.java.templates.cimerror"
      context="java"
@@ -431,7 +431,7 @@ reader.close();</template>
      addPair(${key}, ${value});
 }}.toString());</template>
     
-<template name="ciminfo"
+<template name="spoginfo"
      description="log a structured info message"
      id="com.splunk.project.java.templates.ciminfo"
      context="java"
@@ -441,7 +441,7 @@ reader.close();</template>
      addPair(${key}, ${value});
 }}.toString());</template>    
 
-<template name="cimtrace"
+<template name="spogtrace"
      description="log a structured trace message"
      id="com.splunk.project.java.templates.cimtrace"
      context="java"
@@ -451,7 +451,7 @@ reader.close();</template>
      addPair(${key}, ${value});
 }}.toString());</template>
     
-<template name="cimwarn"
+<template name="spogwarn"
      description="log a structured warn message"
      id="com.splunk.project.java.templates.cimwarn"
      context="java"
