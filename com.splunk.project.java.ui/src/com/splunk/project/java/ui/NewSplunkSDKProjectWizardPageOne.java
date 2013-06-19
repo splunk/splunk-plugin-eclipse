@@ -17,8 +17,10 @@ package com.splunk.project.java.ui;
 
 import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageOne;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -198,7 +200,9 @@ public class NewSplunkSDKProjectWizardPageOne extends
 	
 	@Override
 	public void createControl(Composite parent) {
-		super.createControl(parent);
+		ScrolledComposite subparent = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
+		
+		super.createControl(subparent);
 		
 		Composite composite = (Composite)getControl();
 		
@@ -207,6 +211,10 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		
 		Control optionalLoggingControl = createOptionalLoggingJarsControl(composite);
 		optionalLoggingControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		composite.setSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+		subparent.setContent(composite);
+		setControl(subparent);
 	}
 
 }
