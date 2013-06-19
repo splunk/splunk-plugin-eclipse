@@ -56,7 +56,10 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		final Label explanationLabel = new Label(optionalJarsGroup, SWT.WRAP);
 		explanationLabel.setText("Splunk defaults to XML as its wire format. If you want to use its alternate " +
 		                 "formats (JSON or CSV) you need to add jars so Java can parse these formats.");
-		explanationLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		GridData gridData = new GridData(GridData.FILL, SWT.FILL, true, true);
+		gridData.widthHint = convertWidthInCharsToPixels(50);
+		gridData.heightHint = convertHeightInCharsToPixels(3);
+		explanationLabel.setLayoutData(gridData);
 
 		final Button supportJsonButton = new Button(optionalJarsGroup, SWT.CHECK);
 		supportJsonButton.setText("Add JSON support to project (optional)");
@@ -105,7 +108,10 @@ public class NewSplunkSDKProjectWizardPageOne extends
 				"a logging library and code to log to Splunk and to create " +
 				"logging events following Splunk's Common Information Management " +
 				"recommendations.");
-		explanationLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		GridData gridData = new GridData(GridData.FILL, SWT.FILL, true, true);
+		gridData.widthHint = convertWidthInCharsToPixels(50);
+		gridData.heightHint = convertHeightInCharsToPixels(3);
+		explanationLabel.setLayoutData(gridData);
 		
 		final Composite radioButtonRow = new Composite(optionalLoggingGroup, SWT.NULL);
 		radioButtonRow.setLayout(new RowLayout());
