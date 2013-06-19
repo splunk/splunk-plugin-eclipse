@@ -104,9 +104,8 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		explanationLabel.setText("The Splunk plug-in for Eclipse can set up " +
 				"a logging library and code to log to Splunk and to create " +
 				"logging events following Splunk's Common Information Management " +
-				"recommendations");
+				"recommendations.");
 		explanationLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
 		
 		final Composite radioButtonRow = new Composite(optionalLoggingGroup, SWT.NULL);
 		radioButtonRow.setLayout(new RowLayout());
@@ -200,7 +199,9 @@ public class NewSplunkSDKProjectWizardPageOne extends
 	
 	@Override
 	public void createControl(Composite parent) {
-		ScrolledComposite subparent = new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
+		ScrolledComposite subparent = new ScrolledComposite(parent, SWT.V_SCROLL);
+		subparent.setExpandHorizontal(true);
+		subparent.setMinWidth(0);
 		
 		super.createControl(subparent);
 		
