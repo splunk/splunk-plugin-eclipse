@@ -60,7 +60,7 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 	public final static String jsonJarFile = "gson-2.1.jar";
 	
 	public final static String sl4jApiJarFile = "slf4j-api-1.6.4.jar";
-	public final static String splunkLoggingJarFile = "splunk-plugin-slf4j.jar";
+	public final static String splunkLoggingJarFile = "splunk-library-javalogging.jar";
 	
 	public final static String defaultProgramFile = "Program.java";
 	
