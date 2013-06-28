@@ -18,7 +18,6 @@ package com.splunk.project.java.ui;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -60,7 +59,7 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 	public final static String jsonJarFile = "gson-2.1.jar";
 	
 	public final static String sl4jApiJarFile = "slf4j-api-1.6.4.jar";
-	public final static String splunkLoggingJarFile = "splunklogging.jar";
+	public final static String splunkLoggingJarFile = "splunk-library-javalogging.jar";
 	
 	public final static String defaultProgramFile = "Program.java";
 	

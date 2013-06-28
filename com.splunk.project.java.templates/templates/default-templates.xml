@@ -411,52 +411,52 @@ for (SearchResults searchResults : reader) {
 reader.close();</template>
 
 <!-- CIM logging templates -->
-<template name="cimdebug"
+<template name="spogdebug"
      description="log a structured debug message"
      id="com.splunk.project.java.templates.cimdebug"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.debug(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.debug(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
 
-<template name="cimerror"
+<template name="spogerror"
      description="log a structured error message"
      id="com.splunk.project.java.templates.cimerror"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.error(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.error(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
     
-<template name="ciminfo"
+<template name="spoginfo"
      description="log a structured info message"
      id="com.splunk.project.java.templates.ciminfo"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.info(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.info(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>    
 
-<template name="cimtrace"
+<template name="spogtrace"
      description="log a structured trace message"
      id="com.splunk.project.java.templates.cimtrace"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.trace(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.trace(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
     
-<template name="cimwarn"
+<template name="spogwarn"
      description="log a structured warn message"
      id="com.splunk.project.java.templates.cimwarn"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.dtdsoftware.splunk.logging.SplunkLogEvent)}logger.warn(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.warn(new SplunkLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
      addPair(${key}, ${value});
 }}.toString());</template>
