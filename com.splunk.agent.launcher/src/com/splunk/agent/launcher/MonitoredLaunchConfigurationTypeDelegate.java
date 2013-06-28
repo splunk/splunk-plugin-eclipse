@@ -54,6 +54,9 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 			assert path != null;
 			jarIn = FileLocator.openStream(bundle, path, false);
 		} catch (Throwable e) {
+			try {
+				jarOut.close();
+			} catch (IOException e1) { /* This is basically unreachable */ }
 			throw new CoreException(new Status(Status.ERROR, 
 					Activator.PLUGIN_ID, "Error opening jar for copying", e));
 		}
