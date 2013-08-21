@@ -141,7 +141,9 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		try {
 			out = new BufferedWriter(new OutputStreamWriter(stream, "UTF8"));
 		} catch (UnsupportedEncodingException e) {
-			throw new AssertionError("Your system doesn't support UTF8!", e);
+		    AssertionError f = new AssertionError("Your system doesn't support UTF8!");
+		    f.initCause(e);
+		    throw f;
 		}
 
 		try {
