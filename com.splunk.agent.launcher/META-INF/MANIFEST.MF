@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Splunk Monitored Java Launcher
 Bundle-SymbolicName: com.splunk.agent.launcher;singleton:=true
-Bundle-Version: 0.2
+Bundle-Version: 0.2.1
 Bundle-Activator: com.splunk.agent.launcher.Activator
 Bundle-Vendor: Splunk, Inc.
 Require-Bundle: org.eclipse.core.runtime,
