@@ -3,17 +3,21 @@ package com.splunk.modularinput.java;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.processing.FilerException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -61,9 +65,28 @@ public class Util {
 	
 	public static String resourceToUTF8String(String pluginId, String resourcePath) throws IOException {
 		InputStream inputStream;
-
+		inputStream = resourceToInputStream(pluginId, resourcePath);
+		
+		return inputStreamToUTF8String(inputStream);
+	}
+	
+	public static IFile resourceToFile(String pluginId, String resourcePath, IFile destination) throws CoreException {
+		InputStream inputStream;
 		try {
-			inputStream = FileLocator.openStream(
+			inputStream = resourceToInputStream(pluginId, resourcePath);
+		} catch (Throwable e) {
+			throw new CoreException(new Status(Status.ERROR, 
+				pluginId, "Error copying resource to file", e));
+		}
+
+		destination.create(inputStream, false, new NullProgressMonitor());
+		
+		return destination;
+	}
+	
+	public static InputStream resourceToInputStream(String pluginId, String resourcePath) throws IOException {
+		try {
+			return FileLocator.openStream(
 				Platform.getBundle(pluginId), 
 				new Path(resourcePath), 
 				false
@@ -71,7 +94,5 @@ public class Util {
 		} catch (ExceptionInInitializerError e) {
 			throw new FileNotFoundException("Could not find resource '" + resourcePath + "' in plugin " + pluginId);
 		}
-			
-		return inputStreamToUTF8String(inputStream);
 	}
 }
