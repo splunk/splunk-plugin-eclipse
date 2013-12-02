@@ -155,7 +155,11 @@ public class ModularInputWizardPage extends WizardPage {
 		location.getWidget().getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				options.put("location", location.getWidget().getWidget().getPath());
+				if (location.getWidgetEnabled()) {
+					options.put("location", location.getWidget().getWidget().getPath());
+				} else {
+					options.remove("location");
+				}
 			}
 		});
 		author.getWidget().addModifyListener(new ModifyListener() {
@@ -167,7 +171,11 @@ public class ModularInputWizardPage extends WizardPage {
 		projectLabel.getWidget().getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				options.put("label", projectLabel.getWidget().getWidget().getText());
+				if (projectLabel.getWidgetEnabled()) {
+					options.put("label", projectLabel.getWidget().getWidget().getText());
+				} else {
+					options.remove("label");
+				}
 			}
 		});
 		description.getWidget().addModifyListener(new ModifyListener() {
