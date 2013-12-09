@@ -16,6 +16,9 @@
 
       <jar destfile="dist/maptask.jar"
 	   includes="build/**/*.class"/>
+
+      <copy file="dist/maptask.jar"
+	    todir="../com.splunk.modularinput.java.behavior/resources/"/>
   </target>
 
   <target name="clean">

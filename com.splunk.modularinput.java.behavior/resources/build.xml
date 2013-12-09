@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="$appid$" basedir="." default="build">
+  <property name="build.dir" location="build"/>
+  <property name="jar.dir" location="jars"/>
+
+  <!-- Ant provides no way to map over a set of directories in its default
+       tasks, so we include a custom task to do just that. -->
+  <taskdef name="map" classname="MapTask" classpath="maptask.jar"/>
+
+  <target name="build">
+    <!-- map runs a set of tasks over each of a set of directories. The 
+         directories are specified by the dirset, which is map's first
+         subelement. Then the tasks are run for each directory, with
+         the directory being passed to the tasks as the value of the
+         property named in map's propertyName attribute. -->
+    <map propertyName="name">
+      <!-- Build a jar out of each subdirectory of src/ -->
+      <dirset dir="src" includes="*"/>
+
+      <echo message="Building modular input ${name}"/>
+      <mkdir dir="${build.dir}/${name}"/>
+
+      <!-- Compile the java. -->
+      <javac includeantruntime="false"
+	     srcdir="src/${name}/src"
+	     destdir="${build.dir}/${name}"
+	     target="1.6"
+	     debug="true"
+	     debuglevel="lines,vars,source">
+	<classpath>
+	  <fileset dir="src/${name}/lib" includes="*.jar"/>
+	</classpath>
+      </javac>
+
+      <!-- Create a jar file, including the contents of all the jars
+           in src/${name}/lib directly in the jar. The jar is
+           runnable, and assumes that there is a class Main in the
+           default package which has a main method. -->
+      <jar destfile="${jar.dir}/${name}.jar">
+	<fileset dir="${build.dir}/${name}" includes="**/*.class"/>
+	<zipgroupfileset dir="src/${name}/lib" includes="**/*.jar"/>
+
+	<manifest>
+                <attribute name="Main-Class"
+                           value="Main"/>
+            </manifest>
+      </jar>
+    </map>
+  </target>
+
+  <target name="clean">
+    <delete dir="build"/>
+    <delete dir="jars"/>
+  </target>
+</project>
+    
