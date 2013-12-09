@@ -1,12 +1,16 @@
 package com.splunk.modularinput.java;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -15,6 +19,7 @@ import org.eclipse.swt.widgets.Text;
 
 public class ModularInputWizardPage extends WizardPage {
 	Map<String, String> options;
+	Map<String, String> errorMessages = new HashMap<String, String>();
 
 	public ModularInputWizardPage(Map<String, String> options) {
 		super("New Splunk modular input in Java");
@@ -38,8 +43,6 @@ public class ModularInputWizardPage extends WizardPage {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
 		composite.setLayout(new GridLayout(1, true));
-
-		GridData gridData;
 		
 		/* Project name */
 		final LabelledWidget<Text> projectName = new LabelledWidget<Text>(
@@ -146,47 +149,157 @@ public class ModularInputWizardPage extends WizardPage {
 		description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		// Now hook up all the fields to write to options.
+		ModifyListener ml;
+
+		final Runnable appidRunnable = new Runnable() {
+			@Override
+			public void run() {
+				options.put("appid", projectName.getWidget().getText());
+				if ("".equals(options.get("appid"))) {
+					pushStatus("appid", "Project name cannot be empty.");
+				} else {
+					popStatus("appid");
+				}
+			}
+		};
 		projectName.getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				options.put("appid", projectName.getWidget().getText());
+				appidRunnable.run();
 			}
 		});
+		appidRunnable.run();
+		
+		final Runnable locationRunnable = new Runnable() {
+			@Override
+			public void run() {
+				if (location.getWidgetEnabled()) {
+					options.put("location", location.getWidget().getWidget().getPath());
+					if (options.get("location") == null || "".equals(options.get("location"))) {
+						pushStatus("location", "Location must not be empty.");
+					} else {
+						popStatus("location");
+					}
+				} else {
+					options.remove("location");
+					popStatus("location");
+				}
+			}
+		};
+		
 		location.getWidget().getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				if (location.getWidgetEnabled()) {
-					options.put("location", location.getWidget().getWidget().getPath());
+				locationRunnable.run();
+			}
+		});
+		location.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				locationRunnable.run();
+			}
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				locationRunnable.run();
+			}
+		});
+		locationRunnable.run();
+
+		final Runnable authorRunnable = new Runnable() {
+			@Override
+			public void run() {
+				options.put("author", author.getWidget().getText());
+				if ("".equals(options.get("author"))) {
+					pushStatus("author", "Author must not be empty.");
 				} else {
-					options.remove("location");
+					popStatus("author");
 				}
 			}
-		});
-		author.getWidget().addModifyListener(new ModifyListener() {
+		};
+		author.getWidget().addModifyListener(		new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				options.put("author", author.getWidget().getText());
+				authorRunnable.run();
 			}
 		});
+		authorRunnable.run();
+		
+		final Runnable labelRunnable = new Runnable() {
+			@Override
+			public void run() {
+				if (projectLabel.getWidgetEnabled()) {
+					options.put("label", projectLabel.getWidget().getWidget().getText());
+					if ("".equals(options.get("label"))) {
+						pushStatus("label", "Label must not be empty.");
+					} else {
+						popStatus("label");
+					}
+				} else {
+					options.remove("label");
+					popStatus("label");
+				}
+			}
+		};
 		projectLabel.getWidget().getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				if (projectLabel.getWidgetEnabled()) {
-					options.put("label", projectLabel.getWidget().getWidget().getText());
-				} else {
-					options.remove("label");
-				}
+				labelRunnable.run();
 			}
 		});
+		projectLabel.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				labelRunnable.run();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+		labelRunnable.run();
+		
+		final Runnable descriptionRunnable = new Runnable() {
+			@Override
+			public void run() {
+				options.put("description", description.getWidget().getText());
+				if ("".equals(options.get("description"))) {
+					pushStatus("description", "Description must not be empty.");
+				} else {
+					popStatus("description");
+				}
+			}
+		};
 		description.getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
-				options.put("description", description.getWidget().getText());
+				descriptionRunnable.run();
 			}
 		});
+		descriptionRunnable.run();
 		
 		setControl(composite);
 				
 	}
-
+	
+	public void pushStatus(String label, String message) {
+		errorMessages.put(label, message);
+		setMostSevereStatus();
+	}
+	
+	public void popStatus(String label) {
+		errorMessages.remove(label);
+		setMostSevereStatus();
+	}
+	
+	public void setMostSevereStatus() {
+		if (errorMessages.isEmpty()) {
+			setErrorMessage(null);
+		} else {
+			for (String message : errorMessages.values()) {
+				setErrorMessage(message);
+				return;
+			}
+		}
+	}
 }

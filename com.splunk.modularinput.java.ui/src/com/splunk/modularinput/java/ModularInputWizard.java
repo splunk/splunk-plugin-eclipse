@@ -30,9 +30,10 @@ public class ModularInputWizard extends Wizard implements INewWizard {
 
 	@Override
 	public boolean performFinish() {
+		if (options.get("appid").equals("")) {
+			
+		}
+		
 		return true;
 	}
-	
-	
-
 }
