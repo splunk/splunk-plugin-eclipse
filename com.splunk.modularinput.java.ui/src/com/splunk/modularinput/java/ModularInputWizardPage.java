@@ -18,12 +18,13 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 
 public class ModularInputWizardPage extends WizardPage {
-	Map<String, String> options;
-	Map<String, String> errorMessages = new HashMap<String, String>();
+	private Map<String, String> options;
+	private Map<String, String> errors;
 
-	public ModularInputWizardPage(Map<String, String> options) {
+	public ModularInputWizardPage(Map<String, String> options, Map<String, String> errors) {
 		super("New Splunk modular input in Java");
 		this.options = options;
+		this.errors = errors;
 		setTitle("New Splunk modular input in Java");
 		setDescription("Create a new project for developing Splunk modular inputs.");
 	}
@@ -217,7 +218,7 @@ public class ModularInputWizardPage extends WizardPage {
 				}
 			}
 		};
-		author.getWidget().addModifyListener(		new ModifyListener() {
+		author.getWidget().addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent e) {
 				authorRunnable.run();
@@ -283,23 +284,27 @@ public class ModularInputWizardPage extends WizardPage {
 	}
 	
 	public void pushStatus(String label, String message) {
-		errorMessages.put(label, message);
+		errors.put(label, message);
 		setMostSevereStatus();
 	}
 	
 	public void popStatus(String label) {
-		errorMessages.remove(label);
+		errors.remove(label);
 		setMostSevereStatus();
 	}
 	
 	public void setMostSevereStatus() {
-		if (errorMessages.isEmpty()) {
+		if (errors.isEmpty()) {
 			setErrorMessage(null);
 		} else {
-			for (String message : errorMessages.values()) {
+			for (String message : errors.values()) {
 				setErrorMessage(message);
 				return;
 			}
 		}
+	}
+	
+	public boolean isValid() {
+		return this.errors.isEmpty();
 	}
 }
