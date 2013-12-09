@@ -29,9 +29,7 @@ public class ModularInputTasks {
 			defaultFolder.create(false, true, new SubProgressMonitor(monitor, 0)); 
 			
 			IFile appConf = defaultFolder.getFile("app.conf");
-			String appConfContents = Util.expand(appConfTemplate, options);
-			InputStream appConfSource = new ByteArrayInputStream(appConfContents.getBytes());
-			appConf.create(appConfSource, false, new SubProgressMonitor(monitor, 0));
+			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/app.conf.template", appConf, options);
 			
 			project.getFolder("README").create(false, true,  new SubProgressMonitor(monitor, 0));
 			project.getFolder("jars").create(false, true, new SubProgressMonitor(monitor, 0));
@@ -47,9 +45,7 @@ public class ModularInputTasks {
 			project.getFolder("src").create(false, true, new SubProgressMonitor(monitor, 0));
 			
 			IFile buildXml = project.getFile("build.xml");
-			String buildXmlContents = Util.expand(buildXmlTemplate, options);
-			InputStream buildXmlSource = new ByteArrayInputStream(buildXmlContents.getBytes());
-			buildXml.create(buildXmlSource, false, new SubProgressMonitor(monitor, 0));
+			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/build.xml.template", buildXml, options);
 		} catch (MissingTokenBindingException e) {
 			throw new CoreException(new Status(0, Activator.PLUGIN_ID, e.getMessage(), e));
 		}

@@ -2,6 +2,8 @@ package com.splunk.modularinput.java;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -51,11 +53,34 @@ public class ResourceOpenerTest extends TestCase {
 		project.open(monitor);
 		
 		try {
-			IFile file = Util.resourceToFile(Activator.PLUGIN_ID, "resources/app.conf.template", project.getFile("app.conf"));
+			IFile file = Util.resourceToFile(Activator.PLUGIN_ID, "resources/test.template", project.getFile("app.conf"));
 			
 			InputStream stream = file.getContents();
 			String contents = Util.inputStreamToUTF8String(stream);
-			assertTrue(contents.startsWith("[launcher]"));
+			assertEquals("$boris$ and $hilda$.", contents);
+		} finally {
+			project.delete(true, monitor);
+		}
+	}
+	
+	@Test
+	public void testExpandResourceToFile() throws CoreException, IOException, MissingTokenBindingException {
+		IProgressMonitor monitor = new NullProgressMonitor();
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IProject project = workspace.getRoot().getProject("project");
+		project.create(monitor);
+		project.open(monitor);
+		
+		Map<String, String> options = new HashMap<String, String>();
+		options.put("boris", "meep");
+		options.put("hilda", "mope");
+		
+		try {
+			IFile file = Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/test.template", project.getFile("app.conf"), options);
+			
+			InputStream stream = file.getContents();
+			String contents = Util.inputStreamToUTF8String(stream);
+			assertEquals("meep and mope.", contents);
 		} finally {
 			project.delete(true, monitor);
 		}

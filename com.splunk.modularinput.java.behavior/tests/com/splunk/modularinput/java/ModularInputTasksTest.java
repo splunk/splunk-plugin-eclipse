@@ -58,8 +58,10 @@ public class ModularInputTasksTest extends TestCase {
 		Map<String, String> options = new HashMap<String, String>();
 		options.put("version", "0.1");
 		options.put("author", "Boris the mad baboon");
-		options.put("projectname", "testapp");
+		options.put("appid", "testapp");
 		options.put("description", "This is a test of the emergency broadcast system.");
+		options.put("is_visible", "false");
+		options.put("label", "Yurk!");
 		
 		ModularInputTasks.generateAppSkeleton(project, options, monitor);
 		
@@ -72,15 +74,17 @@ public class ModularInputTasksTest extends TestCase {
 		}
 				
 		assertTrue(project.getFolder("default").getFile("app.conf").exists());
-		assertEquals(
+		assertTrue(Util.inputStreamToUTF8String(project.getFolder("default").getFile("app.conf").getContents()).startsWith(
 				"[launcher]" + newline + 
 				"author = " + options.get("author") + newline +
-				"version = " + options.get("version") + newline +
-				"description = " + options.get("description") + newline,
-				Util.inputStreamToUTF8String(project.getFolder("default").getFile("app.conf").getContents())
-		);
+				"description = " + options.get("description") + newline +
+				"version = " + options.get("version") + newline
+		));
 		
 		assertTrue(project.getFile("build.xml").exists());
-		// TODO Add check of contents of build.xml.
+		assertTrue(Util.inputStreamToUTF8String(project.getFile("build.xml").getContents()).startsWith(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+		));
+				
 	}
 }

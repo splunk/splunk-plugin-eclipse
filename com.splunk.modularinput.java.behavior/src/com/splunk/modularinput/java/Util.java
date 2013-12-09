@@ -1,11 +1,13 @@
 package com.splunk.modularinput.java;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -94,5 +96,23 @@ public class Util {
 		} catch (ExceptionInInitializerError e) {
 			throw new FileNotFoundException("Could not find resource '" + resourcePath + "' in plugin " + pluginId);
 		}
+	}
+	
+	public static IFile expandResourceToFile(String pluginId, String resourcePath, IFile destination, Map<String, String> options)
+			throws CoreException, MissingTokenBindingException {
+		String template;
+		try {
+			template = resourceToUTF8String(pluginId, resourcePath);
+		} catch (Throwable e) {
+			throw new CoreException(new Status(Status.ERROR,
+					pluginId, "Error reading resource.", e));
+		}
+		String output = expand(template, options);
+		try {
+			destination.create(new ByteArrayInputStream(output.getBytes("UTF-8")), false, new NullProgressMonitor());
+		} catch (UnsupportedEncodingException e) {
+			assert(false); // This is supposed to be impossible for UTF-8, according to the Java spec.
+		}
+		return destination;
 	}
 }
