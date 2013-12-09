@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="maptask" basedir="." default="build">
+
+  <target name="build">
+    <mkdir dir="build"/>
+    <mkdir dir="dist"/>
+
+      <javac includeantruntime="true"
+	     srcdir="src"
+	     destdir="build"
+	     target="1.6"
+	     debug="true"
+	     debuglevel="lines,vars,source">
+      </javac>
+
+      <jar destfile="dist/maptask.jar"
+	   includes="build/**/*.class"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="build"/>
+    <delete dir="dist"/>
+  </target>
+</project>
