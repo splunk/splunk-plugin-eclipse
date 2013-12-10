@@ -1,4 +1,4 @@
-package com.splunk.modularinput.java;
+package com.splunk.modularinput.java.ui;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.SWT;

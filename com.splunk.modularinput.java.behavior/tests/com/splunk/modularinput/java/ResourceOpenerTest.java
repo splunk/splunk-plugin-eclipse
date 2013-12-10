@@ -64,7 +64,7 @@ public class ResourceOpenerTest extends TestCase {
 	}
 	
 	@Test
-	public void testExpandResourceToFile() throws CoreException, IOException, MissingTokenBindingException {
+	public void testExpandResourceToFile() throws CoreException, IOException, MissingTokenBindingException, UnterminatedConditionalException {
 		IProgressMonitor monitor = new NullProgressMonitor();
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
 		IProject project = workspace.getRoot().getProject("project");

@@ -48,6 +48,8 @@ public class ModularInputTasks {
 			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/build.xml.template", buildXml, options);
 		} catch (MissingTokenBindingException e) {
 			throw new CoreException(new Status(0, Activator.PLUGIN_ID, e.getMessage(), e));
+		} catch (UnterminatedConditionalException e) {
+			throw new CoreException(new Status(0, Activator.PLUGIN_ID, e.getMessage(), e));
 		}
 	}
 }

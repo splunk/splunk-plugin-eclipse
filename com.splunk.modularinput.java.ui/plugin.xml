@@ -12,7 +12,7 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             category="com.splunk.modularinput.java.ui.splunk"
-            class="com.splunk.modularinput.java.ModularInputWizard"
+            class="com.splunk.modularinput.java.ui.ModularInputWizard"
             id="com.splunk.modularinput.java.ui.newwizard"
             name="Splunk modular input in Java project"
             project="true">

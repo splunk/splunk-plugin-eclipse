@@ -1,4 +1,4 @@
-package com.splunk.modularinput.java;
+package com.splunk.modularinput.java.ui;
 
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Composite;

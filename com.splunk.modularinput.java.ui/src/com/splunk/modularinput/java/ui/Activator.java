@@ -1,4 +1,4 @@
-package com.splunk.modularinput.java;
+package com.splunk.modularinput.java.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

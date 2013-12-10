@@ -1,4 +1,4 @@
-package com.splunk.modularinput.java;
+package com.splunk.modularinput.java.ui;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,42 +59,6 @@ public class ModularInputWizardPage extends WizardPage {
 		);
 		projectName.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
-		/* Location */
-		final ToggledWidget<LabelledWidget<DirectoryChooser>> location = new ToggledWidget<LabelledWidget<DirectoryChooser>>(
-				composite,
-				"Use default location",
-				true,
-				false,
-				new WidgetCreation<LabelledWidget<DirectoryChooser>>() {
-					public LabelledWidget<DirectoryChooser> init(Composite parent) {
-						return new LabelledWidget<DirectoryChooser>(
-								parent,
-								"Location:",
-								null,
-								new WidgetCreation<DirectoryChooser>() {
-									public DirectoryChooser init(Composite parent) {
-										return new DirectoryChooser(parent);
-									}
-								},
-								SWT.NONE);
-					}
-				},
-				SWT.NONE
-		);
-		location.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		
-		ModifyListener listener = new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				if (!location.getWidgetEnabled()) {
-					String path = Platform.getLocation().append(projectName.getWidget().getText()).toOSString();
-					((DirectoryChooser)location.getWidget().getWidget()).setPath(path);
-				}
-			}
-		};
-		projectName.getWidget().addModifyListener(listener);
-		listener.modifyText(null);
-		
 		Group projectSettings = new Group(composite, SWT.NONE);
 		projectSettings.setText("Project settings");
 		projectSettings.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -112,6 +76,19 @@ public class ModularInputWizardPage extends WizardPage {
 			SWT.NONE
 		);
 		author.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		final LabelledWidget<Text> version = new LabelledWidget<Text>(
+			projectSettings, 
+			"Version:",
+			null, 
+			new WidgetCreation<Text>() {
+				public Text init(Composite parent) {
+					return new Text(parent, SWT.SINGLE | SWT.BORDER);
+				}
+			},
+			SWT.NONE
+		);
+		version.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		final ToggledWidget<LabelledWidget<Text>> projectLabel = new ToggledWidget<LabelledWidget<Text>>(
 				projectSettings, 
@@ -150,8 +127,6 @@ public class ModularInputWizardPage extends WizardPage {
 		description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
 		// Now hook up all the fields to write to options.
-		ModifyListener ml;
-
 		final Runnable appidRunnable = new Runnable() {
 			@Override
 			public void run() {
@@ -170,42 +145,6 @@ public class ModularInputWizardPage extends WizardPage {
 			}
 		});
 		appidRunnable.run();
-		
-		final Runnable locationRunnable = new Runnable() {
-			@Override
-			public void run() {
-				if (location.getWidgetEnabled()) {
-					options.put("location", location.getWidget().getWidget().getPath());
-					if (options.get("location") == null || "".equals(options.get("location"))) {
-						pushStatus("location", "Location must not be empty.");
-					} else {
-						popStatus("location");
-					}
-				} else {
-					options.remove("location");
-					popStatus("location");
-				}
-			}
-		};
-		
-		location.getWidget().getWidget().addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(ModifyEvent e) {
-				locationRunnable.run();
-			}
-		});
-		location.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				locationRunnable.run();
-			}
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent e) {
-				locationRunnable.run();
-			}
-		});
-		locationRunnable.run();
 
 		final Runnable authorRunnable = new Runnable() {
 			@Override
@@ -226,10 +165,30 @@ public class ModularInputWizardPage extends WizardPage {
 		});
 		authorRunnable.run();
 		
+		final Runnable versionRunnable = new Runnable() {
+			@Override
+			public void run() {
+				options.put("version", version.getWidget().getText());
+				if ("".equals(options.get("version"))) {
+					pushStatus("version", "Version must not be empty.");
+				} else {
+					popStatus("version");
+				}
+			}
+		};
+		version.getWidget().addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				versionRunnable.run();
+			}
+		});
+		versionRunnable.run();
+		
 		final Runnable labelRunnable = new Runnable() {
 			@Override
 			public void run() {
 				if (projectLabel.getWidgetEnabled()) {
+					options.put("is_visible", "true");
 					options.put("label", projectLabel.getWidget().getWidget().getText());
 					if ("".equals(options.get("label"))) {
 						pushStatus("label", "Label must not be empty.");
@@ -237,6 +196,7 @@ public class ModularInputWizardPage extends WizardPage {
 						popStatus("label");
 					}
 				} else {
+					options.put("is_visible", "false");
 					options.remove("label");
 					popStatus("label");
 				}
@@ -263,11 +223,11 @@ public class ModularInputWizardPage extends WizardPage {
 		final Runnable descriptionRunnable = new Runnable() {
 			@Override
 			public void run() {
-				options.put("description", description.getWidget().getText());
-				if ("".equals(options.get("description"))) {
-					pushStatus("description", "Description must not be empty.");
+				String value = description.getWidget().getText();
+				if ("".equals(value)) {
+					options.remove("description");
 				} else {
-					popStatus("description");
+					options.put("description", value);
 				}
 			}
 		};
@@ -294,6 +254,7 @@ public class ModularInputWizardPage extends WizardPage {
 	}
 	
 	public void setMostSevereStatus() {
+		getWizard().getContainer().updateButtons();
 		if (errors.isEmpty()) {
 			setErrorMessage(null);
 		} else {

@@ -26,30 +26,51 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 
 public class Util {	
-	public static String expand(String template, Map<String,String> tokens) throws MissingTokenBindingException {
+	public static String expand(String template, Map<String,String> tokens) throws MissingTokenBindingException, UnterminatedConditionalException {
         int offset = 0;
         StringBuilder output = new StringBuilder();
-        Pattern tokenRegex = Pattern.compile("(?<!\\$)\\$([A-Za-z0-9_-]+)\\$(?!\\$)");
-        Matcher m;
+        Pattern tokenRegex = Pattern.compile("(?<!\\$)\\$(([A-Za-z0-9_-]+)|if\\(([A-Za-z0-9_-]+)\\))\\$");
+        Matcher tokenMatch;
+        Pattern endRegex = Pattern.compile("\\$endif\\$");
+        Matcher tokenEnd;
 
         while (offset < template.length()) {
-            m = tokenRegex.matcher(template.substring(offset));
+        	
+        	tokenMatch = tokenRegex.matcher(template);
+        	tokenMatch = tokenMatch.region(offset, template.length());
 
-            if (m.lookingAt()) {
-                String tokenName = m.group(1);
-                offset += m.end() - m.start();
-                if (!tokens.containsKey(tokenName)) {
-                	throw new MissingTokenBindingException(tokenName);
-                }
-                String tokenValue = tokens.get(tokenName);
-                output.append(tokens.get(tokenName));
-            } else if (template.substring(offset).startsWith("$$")) {
-                output.append("$");
-                offset += 2;
-            } else {
-                output.append(template.charAt(offset));
-                offset++;
-            }
+        	if (tokenMatch.lookingAt()) {
+        		String tokenName = tokenMatch.group(1);
+        		if (tokenName.startsWith("if(")) {
+        			String token = tokenName.substring(3, tokenName.length()-1);
+
+        			// This is a conditional.
+        			tokenEnd = endRegex.matcher(template);
+        			if (tokenEnd.find(tokenMatch.end())) {
+        				if (tokens.containsKey(token)) {
+        					String toExpand = template.substring(tokenMatch.end(), tokenEnd.start());
+        					output.append(expand(toExpand, tokens));
+        				}
+            			offset = tokenEnd.end();
+        			} else {
+        				throw new UnterminatedConditionalException(token);
+        			}
+        		} else {
+        			// Direct token interpolation.
+        			offset += tokenMatch.end() - tokenMatch.start();
+        			if (!tokens.containsKey(tokenName)) {
+        				throw new MissingTokenBindingException(tokenName);
+        			}
+        			String tokenValue = tokens.get(tokenName);
+        			output.append(tokens.get(tokenName));
+        		}
+        	} else if (template.substring(offset).startsWith("$$")) {
+        		output.append("$");
+        		offset += 2;
+        	} else {
+        		output.append(template.charAt(offset));
+        		offset++;
+        	}
         }
 
         return output.toString();
@@ -99,7 +120,7 @@ public class Util {
 	}
 	
 	public static IFile expandResourceToFile(String pluginId, String resourcePath, IFile destination, Map<String, String> options)
-			throws CoreException, MissingTokenBindingException {
+			throws CoreException, MissingTokenBindingException, UnterminatedConditionalException {
 		String template;
 		try {
 			template = resourceToUTF8String(pluginId, resourcePath);
