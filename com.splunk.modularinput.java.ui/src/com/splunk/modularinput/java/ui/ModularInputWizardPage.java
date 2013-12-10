@@ -48,7 +48,7 @@ public class ModularInputWizardPage extends WizardPage {
 		/* Project name */
 		final LabelledWidget<Text> projectName = new LabelledWidget<Text>(
 			composite,
-			"Project name:",
+			"Modular input name:",
 			"(Name can only contain letters, numbers, '.', and '_'.)",
 			new WidgetCreation<Text>() {
 				public Text init(Composite parent) {
@@ -67,7 +67,7 @@ public class ModularInputWizardPage extends WizardPage {
 		final LabelledWidget<Text> author = new LabelledWidget<Text>(
 			projectSettings, 
 			"Author:", 
-			"(This should be your splunk.com user name if you intend to publish this app to SplunkBase.)",
+			"(This should be your splunk.com user name if you intend to publish this modular input to SplunkBase.)",
 			new WidgetCreation<Text>() {
 				public Text init(Composite parent) {
 					return new Text(parent, SWT.SINGLE | SWT.BORDER);
@@ -92,7 +92,7 @@ public class ModularInputWizardPage extends WizardPage {
 		
 		final ToggledWidget<LabelledWidget<Text>> projectLabel = new ToggledWidget<LabelledWidget<Text>>(
 				projectSettings, 
-				"Show project in Splunk launcher", 
+				"Show modular input in Splunk launcher", 
 				false,
 				true, 
 				new WidgetCreation<LabelledWidget<Text>>() {

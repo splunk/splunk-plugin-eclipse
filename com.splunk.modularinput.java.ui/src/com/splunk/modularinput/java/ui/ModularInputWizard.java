@@ -3,10 +3,12 @@ package com.splunk.modularinput.java.ui;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -16,8 +18,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 
 import com.splunk.modularinput.java.ModularInputTasks;
 
@@ -49,17 +55,18 @@ public class ModularInputWizard extends Wizard implements INewWizard {
 				@Override
 				protected void execute(IProgressMonitor monitor) throws CoreException,
 						InvocationTargetException, InterruptedException {
-					IWorkspace workspace = ResourcesPlugin.getWorkspace();
-					IProject project = workspace.getRoot().getProject(options.get("appid"));
-					project.create(monitor);
-					project.open(monitor);
-					ModularInputTasks.generateAppSkeleton(project, options, monitor);
+					String projectName = options.get("appid");
+					ModularInputTasks.generateAppSkeleton(projectName, options, monitor);
 				}
 			};
 			try {
 				// Fetch the IWizardContainer object that is running this wizard,
 				// and which accepts WorkspaceOperation objects to execute.
 				getContainer().run(true, true, op);
+				IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(options.get("appid"));
+				IFile javaFile = project.getFile("src/Main.java");
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+				IDE.openEditor(page, javaFile);
 				return true;
 			} catch (InvocationTargetException e) { 
 				// One of the steps resulted in a core exception
@@ -73,6 +80,15 @@ public class ModularInputWizard extends Wizard implements INewWizard {
 				);
 				return false;
 			} catch (InterruptedException e) {
+				return false;
+			} catch (PartInitException e) {
+				StatusManager.getManager().handle(new Status(
+						Status.ERROR, 
+						Activator.PLUGIN_ID, 
+						"Error in configuring new Splunk modular input project", 
+						e), 
+					StatusManager.SHOW
+				);
 				return false;
 			}
 		} else {

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -24,15 +25,14 @@ public class ModularInputTasksTest extends TestCase {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		project = workspace.getRoot().getProject("project");
-		project.create(monitor);
-		project.open(monitor);
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		project.delete(true, monitor);
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("delete-me");
+		if (project.exists()) {
+			project.delete(true, monitor);
+		}
 		super.tearDown();
 	}
 	
@@ -42,7 +42,7 @@ public class ModularInputTasksTest extends TestCase {
 		options.put("version", "0.1");
 		
 		try {
-			ModularInputTasks.generateAppSkeleton(project, options, monitor);
+			ModularInputTasks.generateAppSkeleton("delete-me", options, monitor);
 			fail("Did not throw exception when fed insufficient token bindings.");
 		} catch (CoreException e) {
 			assertTrue(e.getCause() instanceof MissingTokenBindingException);
@@ -63,9 +63,10 @@ public class ModularInputTasksTest extends TestCase {
 		options.put("is_visible", "false");
 		options.put("label", "Yurk!");
 		
-		ModularInputTasks.generateAppSkeleton(project, options, monitor);
+		ModularInputTasks.generateAppSkeleton("delete-me", options, monitor);
 		
-		for (String folder : new String[] { "default", "README", "jars", "linux_x86", "linux_x86_64", "windows_x86", "windows_x86_64", "darwin_x86_64", "src" }) {
+		for (String folder : new String[] { "default", "README", "jars", "linux_x86", "linux_x86_64", 
+				"windows_x86", "windows_x86_64", "darwin_x86_64", "src", "build" }) {
 			assertTrue(project.getFolder(folder).exists());
 		}
 		
