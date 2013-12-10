@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.splunk.agent_0.2.0.jar" id="com.splunk.agent" version="0.2">
+   <feature url="features/com.splunk.modularinput.java_0.8.0.jar" id="com.splunk.modularinput.java" version="0.8">
       <category name="splunk"/>
    </feature>
-   <feature url="features/com.splunk.project.java_0.2.0.jar" id="com.splunk.project.java" version="0.2">
+   <feature url="features/com.splunk.agent_0.8.0.jar" id="com.splunk.agent" version="0.8">
+      <category name="splunk"/>
+   </feature>
+   <feature url="features/com.splunk.project.java_0.8.0.jar" id="com.splunk.project.java" version="0.8">
       <category name="splunk"/>
    </feature>
    <category-def name="splunk" label="Splunk"/>
