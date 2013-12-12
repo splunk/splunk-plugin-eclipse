@@ -7,8 +7,8 @@ Bundle-Activator: com.splunk.modularinput.java.ui.Activator
 Bundle-Vendor: Splunk, Inc.
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.core.resources;bundle-version="3.8.1",
- com.splunk.modularinput.java.behavior;bundle-version="0.2.1",
- org.eclipse.ui.ide;bundle-version="3.8.2"
+ org.eclipse.core.resources,
+ com.splunk.modularinput.java.behavior,
+ org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.ui.actions

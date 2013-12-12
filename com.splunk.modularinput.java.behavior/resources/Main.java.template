@@ -1,0 +1,48 @@
+import com.splunk.modularinput.EventWriter;
+import com.splunk.modularinput.InputDefinition;
+import com.splunk.modularinput.MalformedDataException;
+import com.splunk.modularinput.Scheme;
+import com.splunk.modularinput.Script;
+import com.splunk.modularinput.ValidationDefinition;
+
+import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
+
+public class Main extends Script {
+
+    public static void main(String[] args) {
+        new Main().run(args);
+    }
+
+    @Override
+    public Scheme getScheme() {
+    	Scheme scheme = new Scheme("$appid$");
+        
+        // Fill in the scheme. See 
+        //     http://dev.splunk.com/view/java-sdk/SP-CAAAER2
+        // for details. Below is a default implementation
+        // specifying minimum and maximum values to generate
+        // random numbers between.        
+        
+        return scheme;
+    }
+
+	/**
+	 *
+	 */
+    @Override
+    public void validateInput(ValidationDefinition definition) throws Exception {
+        return;
+    }
+
+	/**
+	 *
+	 */
+    @Override
+    public void streamEvents(InputDefinition inputs, EventWriter ew) throws
+            MalformedDataException, XMLStreamException, IOException {
+        ew.synchronizedLog(EventWriter.ERROR, "Override streamEvents.");
+        return;
+    }
+
+}
