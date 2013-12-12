@@ -19,7 +19,7 @@ under the License.
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
-            category="org.eclipse.jdt.ui.java"
+            category="com.splunk.modularinput.java.ui.splunk"
             class="com.splunk.project.java.ui.SplunkSDKProjectWizard"
             finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
             id="com.splunk.project.java.ui.wizard.SplunkSDKProjectWizard"
