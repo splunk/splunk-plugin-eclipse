@@ -32,7 +32,7 @@ with [get-view "Project Explorer" | get-tree] {
     get-item "abcd/src" | get-property index | equals 0 | verify-true
 }
 with [get-view "Project Explorer" | get-tree] {
-    get-item "abcd/splunk-sdk-java-1.1.jar" | get-property caption | equals "splunk-sdk-java-1.1.jar" | verify-true
+    get-item "abcd/splunk-sdk-java-1.2.1.jar" | get-property caption | equals "splunk-sdk-java-1.2.1.jar" | verify-true
     get-item "abcd/opencsv-2.3.jar" | get-property caption | equals "opencsv-2.3.jar" | verify-true
     get-item "abcd/gson-2.1.jar" | get-property caption | equals "gson-2.1.jar" | verify-true
     get-item "abcd/logback-classic-1.0.0.jar" | get-property caption | equals "logback-classic-1.0.0.jar" | verify-true

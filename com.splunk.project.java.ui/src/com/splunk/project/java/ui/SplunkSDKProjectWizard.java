@@ -54,7 +54,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 @SuppressWarnings("restriction")
 public class SplunkSDKProjectWizard extends NewElementWizard implements
 		IExecutableExtension {
-	public final static String splunkSDKJarFile = "splunk-1.2.jar";
+	public final static String splunkSDKJarFile = "splunk-1.2.1.jar";
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.1.jar";
 	

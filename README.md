@@ -2,7 +2,7 @@
 
 #### Version 0.2.1 (Preview)
 
-August, 2013
+September, 2013
 
 The Splunk plug-in for Eclipse provides tooling to support creating projects in Eclipse with the Splunk Software Development Kit (SDK) for Java, and for running Java applications with instrumentation on the Java Virtual Machine (JVM) that logs the application's activity to Splunk.
 
