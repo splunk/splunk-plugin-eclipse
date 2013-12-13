@@ -500,6 +500,6 @@ jobArgs.setLatestTime("now");
      autoinsert="true">${:import(com.splunk.JobArgs)}JobArgs jobArgs = new JobArgs();
 jobArgs.setEarliestTime("-24h@h");
 jobArgs.setLatestTime("now");
-</template>
+</template>     
 
 </templates>
