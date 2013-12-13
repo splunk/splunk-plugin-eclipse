@@ -95,8 +95,14 @@ public class ModularInputTasks {
 			
 			IFolder readmeFolder = project.getFolder("README");
 			readmeFolder.create(false, true,  new SubProgressMonitor(monitor, 0));
-			IFile inputConf = readmeFolder.getFile("inputs.conf.spec"); 
-			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/inputs.conf.spec.template", inputConf, options);
+			IFile inputConf = readmeFolder.getFile("inputs.conf.spec");
+			String inputSpec;
+			if (options.containsKey("working_template")) {
+				inputSpec = "resources/inputs.conf.spec.template";
+			} else {
+				inputSpec = "resources/skeleton-inputs.conf.spec.template";
+			}
+			Util.expandResourceToFile(Activator.PLUGIN_ID, inputSpec, inputConf, options);
 			
 			project.getFolder("jars").create(false, true, new SubProgressMonitor(monitor, 0));
 			
@@ -109,12 +115,24 @@ public class ModularInputTasks {
 				bin.create(false, true, new SubProgressMonitor(monitor, 0));
 			}
 			String appid = options.get("appid");
-			Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-darwin.sh", project.getFile("darwin_x86_64/bin/" + appid + ".sh"));
-			Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-linux.sh", project.getFile("linux_x86/bin/" + appid + ".sh"));
-			Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-linux.sh", project.getFile("linux_x86_64/bin/" + appid + ".sh"));
-			Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-windows_x86_64.exe", project.getFile("windows_x86_64/bin/" + appid + ".exe"));
-			Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-windows_x86.exe", project.getFile("windows_x86/bin/" + appid + ".exe"));
 			
+			IFile shim;
+			
+			shim = Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-darwin.sh", project.getFile("darwin_x86_64/bin/" + appid + ".sh"));
+			shim.getLocation().toFile().setExecutable(true);
+			
+			shim = Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-linux.sh", project.getFile("linux_x86/bin/" + appid + ".sh"));
+			shim.getLocation().toFile().setExecutable(true);
+						
+			shim = Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-linux.sh", project.getFile("linux_x86_64/bin/" + appid + ".sh"));
+			shim.getLocation().toFile().setExecutable(true);
+			
+			shim = Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-windows_x86_64.exe", project.getFile("windows_x86_64/bin/" + appid + ".exe"));
+			shim.getLocation().toFile().setExecutable(true);
+			
+			shim = Util.resourceToFile(Activator.PLUGIN_ID, "resources/shims/shim-windows_x86.exe", project.getFile("windows_x86/bin/" + appid + ".exe"));
+			shim.getLocation().toFile().setExecutable(true);
+						
 			IFolder lib = project.getFolder("lib");
 			lib.create(false, true, new SubProgressMonitor(monitor, 1));
 			IFile splunkSDK = Util.resourceToFile(

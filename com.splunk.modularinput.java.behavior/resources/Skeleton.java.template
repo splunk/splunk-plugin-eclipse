@@ -15,9 +15,15 @@ public class Main extends Script {
         
         // Fill in the scheme. See 
         //     http://dev.splunk.com/view/java-sdk/SP-CAAAER2
-        // for details. Below is a default implementation
-        // specifying minimum and maximum values to generate
-        // random numbers between.        
+        // for details.
+        
+        // Remember that you must add a line to README/inputs.conf.spec
+        // for each parameter you define here. For example, if you define
+        // a parameter abc here, you must add
+        //
+        // abc = <value>
+        //
+        // to the stanza in README/inputs.conf.spec.        
         
         return scheme;
     }

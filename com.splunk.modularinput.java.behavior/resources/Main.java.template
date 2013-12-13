@@ -1,12 +1,8 @@
-import com.splunk.modularinput.EventWriter;
-import com.splunk.modularinput.InputDefinition;
-import com.splunk.modularinput.MalformedDataException;
-import com.splunk.modularinput.Scheme;
-import com.splunk.modularinput.Script;
-import com.splunk.modularinput.ValidationDefinition;
+import com.splunk.modularinput.*;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
+import java.util.Random;
 
 // All modular inputs should inherit from the abstract base class com.splunk.modularinput.Script. They must override
 // the getScheme and streamEvents methods, and, if the scheme returned by getScheme had
@@ -36,6 +32,14 @@ public class Main extends Script {
         // and will run validation internally using that string.
         scheme.setUseExternalValidation(true);
         scheme.setUseSingleInstance(true);
+
+        // Remember that you must add a line to README/inputs.conf.spec
+        // for each parameter you define here. For example, if you define
+        // a parameter abc here, you must add
+        //
+        // abc = <value>
+        //
+        // to the stanza in README/inputs.conf.spec.  
 
         Argument minArgument = new Argument("min");
         minArgument.setDataType(Argument.DataType.NUMBER);
