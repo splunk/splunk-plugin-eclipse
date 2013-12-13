@@ -95,8 +95,8 @@ public class ModularInputTasks {
 			
 			IFolder readmeFolder = project.getFolder("README");
 			readmeFolder.create(false, true,  new SubProgressMonitor(monitor, 0));
-			IFile inputConf = readmeFolder.getFile("input.conf.spec"); 
-			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/input.conf.spec.template", inputConf, options);
+			IFile inputConf = readmeFolder.getFile("inputs.conf.spec"); 
+			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/inputs.conf.spec.template", inputConf, options);
 			
 			project.getFolder("jars").create(false, true, new SubProgressMonitor(monitor, 0));
 			

@@ -19,7 +19,6 @@ import junit.framework.TestCase;
 
 public class ModularInputTasksTest extends TestCase {
 	private static final String newline = System.getProperty("line.separator");
-	IProject project;
 	final IProgressMonitor monitor = new NullProgressMonitor();
 	
 	@Before
@@ -63,7 +62,7 @@ public class ModularInputTasksTest extends TestCase {
 		options.put("is_visible", "false");
 		options.put("label", "Yurk!");
 		
-		ModularInputTasks.generateAppSkeleton("delete-me", options, monitor);
+		IProject project = ModularInputTasks.generateAppSkeleton("delete-me", options, monitor);
 		
 		for (String folder : new String[] { "default", "README", "jars", "linux_x86", "linux_x86_64", 
 				"windows_x86", "windows_x86_64", "darwin_x86_64", "src", "build" }) {
