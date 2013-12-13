@@ -130,7 +130,14 @@ public class ModularInputTasks {
 			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/build.xml.template", buildXml, options);
 			
 			IFile mainJava = src.getFile("Main.java");
-			Util.expandResourceToFile(Activator.PLUGIN_ID, "resources/Main.java.template", mainJava, options);
+			String templateName;
+			if (options.containsKey("working_template")) {
+				templateName = "resources/Main.java.template";
+			} else {
+				templateName = "resources/Skeleton.java.template";
+			}
+			Util.expandResourceToFile(Activator.PLUGIN_ID, templateName, mainJava, options);
+
 		} catch (MissingTokenBindingException e) {
 			throw new CoreException(new Status(0, Activator.PLUGIN_ID, e.getMessage(), e));
 		} catch (UnterminatedConditionalException e) {

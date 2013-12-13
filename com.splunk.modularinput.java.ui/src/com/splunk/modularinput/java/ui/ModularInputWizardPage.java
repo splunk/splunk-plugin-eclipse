@@ -13,6 +13,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
@@ -126,6 +127,11 @@ public class ModularInputWizardPage extends WizardPage {
 		);
 		description.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		
+		final Button workingSample = new Button(projectSettings, SWT.CHECK);
+		workingSample.setSelection(true);
+		workingSample.setText("Generate a working example implementation.");
+		workingSample.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
 		// Now hook up all the fields to write to options.
 		final Runnable appidRunnable = new Runnable() {
 			@Override
@@ -238,6 +244,27 @@ public class ModularInputWizardPage extends WizardPage {
 			}
 		});
 		descriptionRunnable.run();
+		
+		final Runnable workingSampleRunnable = new Runnable() {
+			@Override
+			public void run() {
+				if (workingSample.getSelection()) {
+					options.put("working_template", "true");
+				} else {
+					options.remove("working_template");
+				}
+			}
+		};
+		workingSample.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				workingSampleRunnable.run();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+		workingSampleRunnable.run();
 		
 		setControl(composite);
 				
