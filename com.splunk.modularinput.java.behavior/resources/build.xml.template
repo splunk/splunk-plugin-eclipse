@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="$appid$" basedir="." default="build">
+<project name="$appid$" basedir="." default="package">
   <property name="build.dir" location="build"/>
   <property name="jar.dir" location="jars"/>
 
@@ -37,6 +37,14 @@
   <target name="clean">
     <delete dir="build"/>
     <delete dir="jars"/>
+  </target>
+  
+   <target name="package" depends="build">
+    <delete dir="dist"/>
+  	<mkdir dir="dist"/>
+	<tar destfile="dist/$appid$.spl"
+  	     basedir=".."
+  	     includes="$appid$/**/*" /> 
   </target>
 </project>
     
