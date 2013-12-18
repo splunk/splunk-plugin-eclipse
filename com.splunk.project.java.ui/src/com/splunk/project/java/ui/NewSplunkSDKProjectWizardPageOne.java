@@ -103,7 +103,7 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		optionalLoggingGroup.setLayout(new GridLayout(1, false));
 		
 		final Label explanationLabel = new Label(optionalLoggingGroup, SWT.WRAP);
-		explanationLabel.setText("The Splunk® Plug-in for Eclipse can set up " +
+		explanationLabel.setText("The Splunk\u00AE Plug-in for Eclipse can set up " +
 				"a logging library and code to log to Splunk and to create " +
 				"logging events following Splunk's Common Information Model (CIM) " +
 				"recommendations.");

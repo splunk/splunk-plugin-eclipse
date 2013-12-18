@@ -43,8 +43,21 @@
     <delete dir="dist"/>
   	<mkdir dir="dist"/>
 	<tar destfile="dist/$appid$.spl"
-  	     basedir=".."
-  	     includes="$appid$/**/*" /> 
+		 longfile="gnu">
+		<tarfileset dir="." filemode="755" prefix="$appid$">
+			<include name="linux_x86_64/**/*" />
+			<include name="linux_x86/**/*" />
+			<include name="darwin_x86_64/**/*" />
+		</tarfileset>
+		<tarfileset dir="." prefix="$appid$">
+			<include name="**/*" />
+			<exclude name=".*" />
+			<exclude name="**/.*" />
+			<exclude name="linux_x86_64/**/*" />
+			<exclude name="linux_x86/**/*" />
+			<exclude name="darwin_x86_64/**/*" />
+		</tarfileset>
+	</tar>
   </target>
 </project>
     
