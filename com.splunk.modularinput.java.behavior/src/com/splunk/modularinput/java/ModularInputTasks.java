@@ -23,7 +23,7 @@ import org.eclipse.jdt.launching.JavaRuntime;
 
 import com.splunk.modularinput.java.Util;
 import com.splunk.modularinput.java.behavior.Activator;
-import com.splunk.project.java.ui.SplunkSDKProjectWizard;
+import com.splunk.project.java.ui.ProjectTasks;
 
 public class ModularInputTasks {
 	final static String newline = System.getProperty("line.separator");
@@ -137,8 +137,8 @@ public class ModularInputTasks {
 			lib.create(false, true, new SubProgressMonitor(monitor, 1));
 			IFile splunkSDK = Util.resourceToFile(
 					com.splunk.project.java.ui.Activator.PLUGIN_ID,
-					"resources/" + SplunkSDKProjectWizard.splunkSDKJarFile,
-					lib.getFile(SplunkSDKProjectWizard.splunkSDKJarFile)
+					"resources/" + ProjectTasks.splunkSDKJarFile,
+					lib.getFile(ProjectTasks.splunkSDKJarFile)
 			);
 			classpath[2] = JavaCore.newLibraryEntry(splunkSDK.getFullPath(), null, null);
 			

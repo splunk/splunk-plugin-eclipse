@@ -1,29 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         id="javaModularInput"
-         name="Splunk modular input in Java"
-         point="org.eclipse.core.resources.natures">
-      <runtime>
-         <run
-               class="com.splunk.modularinput.java.behavior.JavaModularInputNature">
-         </run>
-      </runtime>
-      <builder
-            id="com.splunk.modularinput.java.javaModularInput">
-      </builder>
-   </extension>
-   <extension
-         id="com.splunk.modularinput.java.javaModularInput"
-         name="Splunk modular input for Java"
-         point="org.eclipse.core.resources.builders">
-      <builder
-            hasNature="true">
-         <run
-               class="com.splunk.modularinput.java.behavior.JavaModularInputBuilder">
-         </run>
-      </builder>
-   </extension>
 
 </plugin>
