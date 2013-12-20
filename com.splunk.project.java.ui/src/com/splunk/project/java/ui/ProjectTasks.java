@@ -10,13 +10,17 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.internal.core.ClasspathEntry;
 
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.LoggingFramework;
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
@@ -75,6 +79,16 @@ public class ProjectTasks {
 		return destination;
 	}
 	
+	private static void addClasspathEntry(IJavaProject javaProject, IClasspathEntry entry, IProgressMonitor monitor) throws JavaModelException {
+		IClasspathEntry[] oldClassPath = javaProject.getRawClasspath();
+		IClasspathEntry[] newClassPath = 
+				new IClasspathEntry[oldClassPath.length+1];
+		System.arraycopy(oldClassPath, 0, newClassPath, 0, oldClassPath.length);
+		newClassPath[oldClassPath.length] = entry;
+				
+		javaProject.setRawClasspath(newClassPath, 
+				new SubProgressMonitor(monitor, 100));	
+	}
 	
 	/**
 	 * Copy a jar from the plugin into the lib/ directory of the project.
@@ -101,14 +115,11 @@ public class ProjectTasks {
 		
 		// Add the jar to the classpath
 		IJavaProject javaProject = JavaCore.create(project);
-		IClasspathEntry[] oldClassPath = javaProject.getRawClasspath();
-		IClasspathEntry[] newClassPath = 
-				new IClasspathEntry[oldClassPath.length+1];
-		System.arraycopy(oldClassPath, 0, newClassPath, 0, oldClassPath.length);
-		newClassPath[oldClassPath.length] = 
-				JavaCore.newLibraryEntry(destination.getFullPath(), null, null);
-		javaProject.setRawClasspath(newClassPath, 
-				new SubProgressMonitor(monitor, 100));
+		addClasspathEntry(
+				JavaCore.create(project), 
+				JavaCore.newLibraryEntry(destination.getFullPath(), null, null), 
+				new NullProgressMonitor()
+		);
 		
 		return destination;
 	}
@@ -124,6 +135,23 @@ public class ProjectTasks {
 			addJarToProject(project, jsonJarFile, new SubProgressMonitor(monitor, 100));
 		}
 		
+		if (options.loggingSupport != LoggingFramework.NONE) {
+			IJavaProject jproject = JavaCore.create(project);
+			IFolder config = project.getFolder("config");
+			if (!config.exists()) {
+				config.create(false, true, new SubProgressMonitor(monitor, 1));
+			}
+			IPackageFragmentRoot srcPF = jproject.getPackageFragmentRoot(config);
+
+			IClasspathEntry configCP = JavaCore.newSourceEntry(srcPF.getPath(), new IPath[0], srcPF.getPath());
+
+			addClasspathEntry(
+				JavaCore.create(project),
+				configCP,
+				new NullProgressMonitor()
+			);
+		}
+		
 		// Add logging support
 		if (options.loggingSupport == LoggingFramework.LOGBACK) {
 			for (String jarFile : logbackJarFiles) {
@@ -131,7 +159,7 @@ public class ProjectTasks {
 			}
 			addFileToProject(project, 
 					logbackConfigFile, 
-					logbackConfigFile,
+					"config/" + logbackConfigFile,
 					new SubProgressMonitor(monitor, 100)
 			);
 		} else if (options.loggingSupport == LoggingFramework.LOG4J) {
@@ -140,7 +168,7 @@ public class ProjectTasks {
 			}
 			addFileToProject(project, 
 					log4jConfigFile,
-					log4jConfigFile,
+					"config/" + log4jConfigFile,
 					new SubProgressMonitor(monitor, 100)
 			);
 		} else if (options.loggingSupport == LoggingFramework.JAVA_UTIL_LOGGING) {
@@ -149,7 +177,7 @@ public class ProjectTasks {
 			}
 			addFileToProject(project, 
 					javaUtilConfigFile, 
-					javaUtilConfigFile,
+					"config/" + javaUtilConfigFile,
 					new SubProgressMonitor(monitor, 100)
 			);
 		}
