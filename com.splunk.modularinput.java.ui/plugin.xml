@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="com.splunk.modularinput.java.ui.splunk"
+            name="Splunk">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="com.splunk.modularinput.java.ui.splunk"
+            class="com.splunk.modularinput.java.ui.ModularInputWizard"
+            id="com.splunk.modularinput.java.ui.newwizard"
+            name="Splunk modular input in Java project"
+            project="true">
+      </wizard>
+   </extension>
+
+</plugin>

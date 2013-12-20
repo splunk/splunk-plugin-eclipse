@@ -4,3 +4,5 @@ splunk-update-site/artifacts.jar
 splunk-update-site/content.jar
 splunk-update-site/features/*
 splunk-update-site/plugins/*
+maptask/build
+maptask/dist

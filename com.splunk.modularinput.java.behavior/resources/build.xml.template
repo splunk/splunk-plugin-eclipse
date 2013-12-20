@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="$appid$" basedir="." default="package">
+  <property name="build.dir" location="build"/>
+  <property name="jar.dir" location="jars"/>
+
+  <target name="build">
+      <mkdir dir="${build.dir}"/>
+
+      <!-- Compile the java. -->
+      <javac includeantruntime="false"
+	     srcdir="src"
+	     destdir="${build.dir}"
+	     target="1.6"
+	     debug="true"
+	     debuglevel="lines,vars,source">
+	   <classpath>
+	     <fileset dir="lib" includes="*.jar"/>
+	   </classpath>
+     </javac>
+
+     <!-- Create a jar file, including the contents of all the jars
+          in lib/ directly in the jar. The jar is
+          runnable, and assumes that there is a class Main in the
+          default package which has a main method. -->
+     <jar destfile="${jar.dir}/$appid$.jar">
+	   <fileset dir="${build.dir}" includes="**/*.class"/>
+	   <zipgroupfileset dir="lib" includes="**/*.jar"/>
+
+	   <manifest>
+          <attribute name="Main-Class"
+                     value="Main"/>
+       </manifest>
+     </jar>
+  </target>
+
+  <target name="clean">
+    <delete dir="build"/>
+    <delete dir="jars"/>
+  </target>
+  
+   <target name="package" depends="build">
+    <delete dir="dist"/>
+  	<mkdir dir="dist"/>
+	<tar destfile="dist/$appid$.spl"
+		 longfile="gnu">
+		<tarfileset dir="." filemode="755" prefix="$appid$">
+			<include name="linux_x86_64/**/*" />
+			<include name="linux_x86/**/*" />
+			<include name="darwin_x86_64/**/*" />
+		</tarfileset>
+		<tarfileset dir="." prefix="$appid$">
+			<include name="**/*" />
+			<exclude name=".*" />
+			<exclude name="**/.*" />
+			<exclude name="linux_x86_64/**/*" />
+			<exclude name="linux_x86/**/*" />
+			<exclude name="darwin_x86_64/**/*" />
+		</tarfileset>
+	</tar>
+  </target>
+</project>
+    
