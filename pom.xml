@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <properties>
+    <tycho.version>0.19.0</tycho.version>
+    <kepler-repo.url>http://download.eclipse.org/releases/kepler</kepler-repo.url>
+  </properties>
+
+  <groupId>com.splunk</groupId>
+  <artifactId>splunk-plugin-eclipse</artifactId>
+  <version>0.8.0</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>com.splunk.agent</module>
+    <module>com.splunk.agent.launcher</module>
+    <module>com.splunk.agent.launcher.ui</module>
+    <module>com.splunk.project.java</module>
+    <module>com.splunk.project.java.ui</module>
+    <module>com.splunk.project.java.templates</module>
+    <module>com.splunk.modularinput.java</module>
+    <module>com.splunk.modularinput.java.behavior</module>
+    <module>com.splunk.modularinput.java.ui</module>
+    <module>splunk-update-site</module>
+  </modules>
+
+
+  <repositories>
+    <repository>
+      <id>kepler</id>
+      <url>${kepler-repo.url}</url>
+      <layout>p2</layout>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <plugin>
+	<groupId>org.eclipse.tycho</groupId>
+	<artifactId>tycho-maven-plugin</artifactId>
+	<version>${tycho.version}</version>
+	<extensions>true</extensions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+	<version>${tycho.version}</version>
+        <configuration>
+	  <resolver>p2</resolver>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project> 
