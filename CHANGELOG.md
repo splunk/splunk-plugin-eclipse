@@ -1,5 +1,9 @@
 # Splunk plug-in for Eclipse
 
+## Version 1.0
+
+* Added Maven build system to plug-in.
+
 ## Version 0.8
 
 * Added support for creating modular inputs in Java.
@@ -8,7 +12,7 @@
 
 * Fixed errors in dependency versions so plug-in works on versions of Eclipse back to 3.6.2.
 * Upgraded the Splunk SDK for Java version 1.2.1.
-	
+
 ## Version 0.2
 
 * Upgraded to Splunk SDK for Java version 1.2.
