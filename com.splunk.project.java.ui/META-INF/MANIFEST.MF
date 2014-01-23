@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.splunk.project.java.ui
-Import-Package: org.eclipse.ui.actions
+Import-Package: org.eclipse.ui.actions,
+ org.eclipse.ui.ide

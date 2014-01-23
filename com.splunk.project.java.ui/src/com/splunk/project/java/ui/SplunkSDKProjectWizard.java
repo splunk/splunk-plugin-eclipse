@@ -15,30 +15,24 @@
  */
 package com.splunk.project.java.ui;
 
-import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExecutableExtension;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.internal.ui.wizards.NewElementWizard;
 import org.eclipse.jdt.ui.wizards.NewJavaProjectWizardPageTwo;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 /* (non-Javadoc)
@@ -65,6 +59,7 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 		public boolean supportJson;
 		public boolean supportCsv;
 		public LoggingFramework loggingSupport;
+		public boolean generateExample;
 		
 		public SplunkSDKProjectCreationOptions() {
 			supportJson = false;
@@ -128,6 +123,12 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 				// Fetch the IWizardContainer object that is running this wizard,
 				// and which accepts WorkspaceOperation objects to execute.
 				getContainer().run(true, true, operation);
+				IProject project = ((IJavaProject)getCreatedElement()).getProject();
+				IFile javaFile = project.getFile("src/Program.java");
+				if (javaFile.exists()) {
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					IDE.openEditor(page, javaFile);
+				}
 				return true;
 			} catch (InvocationTargetException e) { 
 				// One of the steps resulted in a core exception
@@ -141,6 +142,8 @@ public class SplunkSDKProjectWizard extends NewElementWizard implements
 				);
 				return false;
 			} catch (InterruptedException e) {
+				return false;
+			} catch (PartInitException e) {
 				return false;
 			}
 

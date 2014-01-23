@@ -1,10 +1,7 @@
 package com.splunk.modularinput.java.ui;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

@@ -20,8 +20,6 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jdt.internal.core.ClasspathEntry;
-
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.LoggingFramework;
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
 
@@ -114,7 +112,7 @@ public class ProjectTasks {
 				);
 		
 		// Add the jar to the classpath
-		IJavaProject javaProject = JavaCore.create(project);
+		JavaCore.create(project);
 		addClasspathEntry(
 				JavaCore.create(project), 
 				JavaCore.newLibraryEntry(destination.getFullPath(), null, null), 
@@ -208,23 +206,25 @@ public class ProjectTasks {
 				}
 			}
 		}
-		
-		if (javaProject.findPackageFragment(javaProject.getPath()) != null) {
-			// Using the root of the project as a source directory.
-			addFileToProject(
-					project, 
-					defaultProgramFile, 
-					defaultProgramFile, 
-					new SubProgressMonitor(monitor, 100)
-			);
-		} else if (javaProject.getPackageFragmentRoot(javaProject.getPath() + File.separator + "src") != null) {
-			// Use the src/ directory.
-			addFileToProject(
-					project,
-					defaultProgramFile, 
-					"src" + File.separator + defaultProgramFile, 
-					new SubProgressMonitor(monitor, 100)
-			);
+
+		if (options.generateExample) {
+			if (javaProject.findPackageFragment(javaProject.getPath()) != null) {
+				// Using the root of the project as a source directory.
+				addFileToProject(
+						project, 
+						defaultProgramFile, 
+						defaultProgramFile, 
+						new SubProgressMonitor(monitor, 100)
+						);
+			} else if (javaProject.getPackageFragmentRoot(javaProject.getPath() + File.separator + "src") != null) {
+				// Use the src/ directory.
+				addFileToProject(
+						project,
+						defaultProgramFile, 
+						"src" + File.separator + defaultProgramFile, 
+						new SubProgressMonitor(monitor, 100)
+						);
+			}
 		}
 		// If neither case applies, the user has done customization,
 		// is probably advanced, and doesn't need our template.

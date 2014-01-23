@@ -2,9 +2,7 @@ package com.splunk.modularinput.java;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -12,18 +10,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.annotation.processing.FilerException;
-
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 
 public class Util {	
 	public static String expand(String template, Map<String,String> tokens) throws MissingTokenBindingException, UnterminatedConditionalException {
@@ -61,7 +54,6 @@ public class Util {
         			if (!tokens.containsKey(tokenName)) {
         				throw new MissingTokenBindingException(tokenName);
         			}
-        			String tokenValue = tokens.get(tokenName);
         			output.append(tokens.get(tokenName));
         		}
         	} else if (template.substring(offset).startsWith("$$")) {

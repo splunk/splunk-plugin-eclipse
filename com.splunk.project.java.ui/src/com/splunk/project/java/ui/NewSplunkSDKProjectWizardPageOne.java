@@ -217,6 +217,26 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		
 		Control optionalLoggingControl = createOptionalLoggingJarsControl(composite);
 		optionalLoggingControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		final Button generateInitialCode = new Button(composite, SWT.CHECK);
+		generateInitialCode.setText("Generate a working example");
+		generateInitialCode.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		SelectionListener generateInitialCodeListener = new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				options.generateExample = generateInitialCode.getSelection();
+			}
+		};
+		
+		generateInitialCode.addSelectionListener(generateInitialCodeListener);
+		generateInitialCode.setSelection(true);
+		generateInitialCodeListener.widgetDefaultSelected(null);
 
 		composite.setSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		subparent.setContent(composite);
