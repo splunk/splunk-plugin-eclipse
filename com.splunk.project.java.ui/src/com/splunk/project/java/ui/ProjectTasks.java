@@ -24,7 +24,7 @@ import com.splunk.project.java.ui.SplunkSDKProjectWizard.LoggingFramework;
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
 
 public class ProjectTasks {
-	public final static String splunkSDKJarFile = "splunk-sdk-java-1.2.1.jar";
+	public final static String splunkSDKJarFile = "splunk-sdk-java.jar";
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.1.jar";
 	
@@ -38,7 +38,7 @@ public class ProjectTasks {
 		"log4j-1.2.16.jar",
 		"slf4j-log4j12-1.6.4.jar"
 	};
-	public final static String log4jConfigFile = "log4j.properties";
+	public final static String log4jConfigFile = "log4j2.xml";
 	
 	public final static String[] logbackJarFiles = {
 		"logback-classic-1.0.0.jar",

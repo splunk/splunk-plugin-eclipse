@@ -3,37 +3,46 @@
 <!--Example logback configuration using a Splunk REST Appender  or Splunk Raw TCP Appender -->
 
 <configuration>
+    <!--
+      You should send data to Splunk using TCP inputs. You can find the documentation
+      on how to open TCP inputs on Splunk at
 
-<!--Send log events to a Splunk Raw TCP server socket-->
-  <appender name="splunkrawtcp" class="com.splunk.logging.logback.appender.SplunkRawTCPAppender">
-    <port>5150</port>
-    <host>localhost</host>
-    <maxQueueSize>5MB</maxQueueSize>
-    <dropEventsOnQueueFull>false</dropEventsOnQueueFull>
-    <layout class="ch.qos.logback.classic.PatternLayout">
-      <pattern>%m%n</pattern>
-      <!-- optionally you can enrich the messages with formatting tokens from the logging framework
-      <pattern>%d %m%n</pattern>
-      <pattern>%m loglevel="%p"%n</pattern>
-       -->
-    </layout>
-  </appender>
-  
-<!--Send log events to a console-->
-  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-    <Target>System.out</Target>
-    <encoder>
-      <pattern>%d [%thread] %level %mdc %logger{35} - %msg%n</pattern>
-    </encoder>
-  </appender>
-  
-<!--Splunk logger-->
-  <logger name="splunk.logger" additivity="false" level="INFO">
-    <appender-ref ref="splunkrawtcp"/>
-  </logger>
-  
-<!--Root logger-->
-  <root level="INFO">
-    <appender-ref ref="stdout"/>
-  </root>
+          http://docs.splunk.com/Documentation/Splunk/6.0.1/Data/Monitornetworkports
+
+      Logback does not ship with a usable appender for TCP sockets (its SocketAppender
+      seriealizes Java objects for deserialization by a server elsewhere). Instead, use
+      the TcpAppender provided with this library.
+
+      This example assumes that you have Splunk running on your local machine (127.0.0.1) with a
+      TCP input configured on port 15000. Note that TCP inputs are *not* the same as
+      Splunk's management port.
+
+      You can control the format of what is logged by changing the encoder (see
+
+          http://logback.qos.ch/manual/encoders.html
+
+      for details), but the pattern below produces a simple timestamp, followed by
+      the full message and a newline, rather like
+
+          2012-04-26 14:54:38,461 [%thread] %level text of my event
+    -->
+    <appender name="socket" class="com.splunk.logging.TcpAppender">
+        <RemoteHost>127.0.0.1</RemoteHost>
+        <Port>15000</Port>
+        <!-- Use this to customize the format:
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%level: %msg%n</pattern>
+        </layout>
+        -->
+    </appender>
+
+    <logger name="splunk.logger" additivity="false" level="INFO">
+        <appender-ref ref="socket"/>
+        <appender-ref ref="console"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="socket"/>
+        <appender-ref ref="console"/>
+    </root>
 </configuration>
