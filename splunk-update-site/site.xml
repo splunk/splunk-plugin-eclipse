@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.splunk.modularinput.java_1.0.0.jar" id="com.splunk.modularinput.java" version="0.8">
+   <feature url="features/com.splunk.modularinput.java_1.0.0.jar" id="com.splunk.modularinput.java" version="1.0.0">
       <category name="splunk"/>
    </feature>
    <feature url="features/com.splunk.agent_1.0.0.jar" id="com.splunk.agent" version="1.0.0">
