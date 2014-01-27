@@ -22,6 +22,7 @@ under the License.
             category="com.splunk.modularinput.java.ui.splunk"
             class="com.splunk.project.java.ui.SplunkSDKProjectWizard"
             finalPerspective="org.eclipse.jdt.ui.JavaPerspective"
+            icon="icons/splunk.gif"
             id="com.splunk.project.java.ui.wizard.SplunkSDKProjectWizard"
             name="Splunk SDK for Java project"
             project="true">

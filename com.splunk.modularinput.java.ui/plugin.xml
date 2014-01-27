@@ -13,6 +13,7 @@
       <wizard
             category="com.splunk.modularinput.java.ui.splunk"
             class="com.splunk.modularinput.java.ui.ModularInputWizard"
+            icon="icons/splunk.gif"
             id="com.splunk.modularinput.java.ui.newwizard"
             name="Splunk modular input in Java project"
             project="true">
