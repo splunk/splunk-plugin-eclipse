@@ -28,26 +28,27 @@ public class ProjectTasks {
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.1.jar";
 	
-	public final static String sl4jApiJarFile = "slf4j-api-1.6.4.jar";
+	public final static String sl4jApiJarFile = "slf4j-api.jar";
 	public final static String splunkLoggingJarFile = "splunk-library-javalogging.jar";
 	protected static final String commonsLangJarFile = "commons-lang-2.4.jar";
 	
 	public final static String defaultProgramFile = "Program.java";
 	
 	public final static String[] log4jJarFiles = {
-		"log4j-1.2.16.jar",
-		"slf4j-log4j12-1.6.4.jar"
+		"log4j-api.jar",
+		"log4j-core.jar",
+		"log4j-slf4j-impl.jar"
 	};
 	public final static String log4jConfigFile = "log4j2.xml";
 	
 	public final static String[] logbackJarFiles = {
-		"logback-classic-1.0.0.jar",
-		"logback-core-1.0.0.jar"
+		"logback-classic.jar",
+		"logback-core.jar"
 	};
 	public final static String logbackConfigFile = "logback.xml";
 	
 	public final static String[] javaUtilJarFiles = {
-		"slf4j-jdk14-1.6.4.jar"
+		"slf4j-jdk14.jar"
 	};
 	public final static String javaUtilConfigFile = "jdklogging.properties";
 	

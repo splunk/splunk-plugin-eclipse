@@ -12,9 +12,7 @@
     -->
     <Appenders>
         <Socket name="socket" host="127.0.0.1" port="15000">
-            <!-- If you want to define a custom formatting: 
-            <PatternLayout pattern="%p: %m%n" charset="UTF-8"/>
-            -->
+            <PatternLayout pattern="%d{ISO8601} %p: %m%n"" charset="UTF-8"/>
         </Socket>
         <Console name="console">
         </Console>

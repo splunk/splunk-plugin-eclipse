@@ -26,20 +26,19 @@
 
           2012-04-26 14:54:38,461 [%thread] %level text of my event
     -->
-    <appender name="socket" class="com.splunk.logging.TcpAppender">
+   <appender name="socket" class="com.splunk.logging.TcpAppender">
         <RemoteHost>127.0.0.1</RemoteHost>
         <Port>15000</Port>
-        <!-- Use this to customize the format:
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%level: %msg%n</pattern>
+            <pattern>%date{ISO8601} %level: %msg%n</pattern>
         </layout>
-        -->
     </appender>
-
-    <logger name="splunk.logger" additivity="false" level="INFO">
-        <appender-ref ref="socket"/>
-        <appender-ref ref="console"/>
-    </logger>
+    
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{ISO8601} %level: %msg%n</pattern>
+        </encoder>
+    </appender>
 
     <root level="INFO">
         <appender-ref ref="socket"/>

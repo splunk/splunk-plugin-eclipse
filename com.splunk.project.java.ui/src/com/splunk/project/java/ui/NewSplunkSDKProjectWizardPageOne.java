@@ -137,7 +137,7 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		});
 		
 		final Button log4jButton = new Button(radioButtonRow, SWT.RADIO);
-		log4jButton.setText("Log4j");
+		log4jButton.setText("Log4j 2");
 		log4jButton.setEnabled(false);		
 		log4jButton.addSelectionListener(new SelectionListener() {
 			@Override
