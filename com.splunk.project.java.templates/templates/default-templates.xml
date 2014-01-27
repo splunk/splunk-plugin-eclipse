@@ -500,6 +500,19 @@ jobArgs.setLatestTime("now");
      autoinsert="true">${:import(com.splunk.JobArgs)}JobArgs jobArgs = new JobArgs();
 jobArgs.setEarliestTime("-24h@h");
 jobArgs.setLatestTime("now");
-</template>     
+</template>  
+
+<template name="newargument"
+          description="new modular input argument"
+          id="com.splunk.project.java.templates.newargument"
+          context="java"
+          enabled="true"
+          autoinsert="true">Argument ${name} = new Argument("${name}");
+        ${name}.setDataType(Argument.DataType.STRING);
+        ${name}.setDescription("${description}");
+        ${name}.setRequiredOnCreate(true);
+        ${name}.setRequiredOnEdit(true);
+        scheme.addArgument(${name});    
+</template>   
 
 </templates>

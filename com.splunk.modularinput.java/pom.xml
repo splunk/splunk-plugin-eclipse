@@ -5,8 +5,17 @@
   <parent>
     <groupId>com.splunk</groupId>
     <artifactId>splunk-plugin-eclipse</artifactId>
-    <version>0.8.0</version>
+    <version>1.0.0</version>
   </parent>
   <artifactId>com.splunk.modularinput.java</artifactId>
   <packaging>eclipse-feature</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jarsigner-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>

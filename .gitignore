@@ -1,3 +1,4 @@
 *.class
 *~
-splunk-update-site/target
+*/target
+.idea

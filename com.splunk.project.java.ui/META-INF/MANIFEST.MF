@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Splunk plug-in for Eclipse - UI
 Bundle-SymbolicName: com.splunk.project.java.ui;singleton:=true
-Bundle-Version: 0.8
+Bundle-Version: 1.0.0
 Bundle-Activator: com.splunk.project.java.ui.Activator
 Bundle-Vendor: Splunk, Inc.
 Require-Bundle: org.eclipse.ui,
@@ -13,4 +13,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.splunk.project.java.ui
-Import-Package: org.eclipse.ui.actions
+Import-Package: org.eclipse.ui.actions,
+ org.eclipse.ui.ide
