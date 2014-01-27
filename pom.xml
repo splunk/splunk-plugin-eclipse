@@ -9,7 +9,7 @@
 
   <groupId>com.splunk</groupId>
   <artifactId>splunk-plugin-eclipse</artifactId>
-  <version>0.8.0</version>
+  <version>1.0.0</version>
   <packaging>pom</packaging>
 
   <modules>
