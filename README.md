@@ -11,4 +11,4 @@ Splunk plug-in for Eclipse online documentation is located at:
 
 For installation and set-up instructions, refer to the Installation Manual: <http://dev.splunk.com/view/splunk-plugin-eclipse/SP-CAAAEQS>
 
-**Note**: The java monitoring feature is currently in preview and unsupported. To download a version of the plugin which includes the java monitoring, clone and checkout the `java-monitoring`, or download the archive [here] (https://github.com/splunk/splunk-plugin-eclipse/archive/java-monitoring.zip)
+**Note**: The Java monitoring feature is currently in preview and unsupported. To download a version of the plugin which includes the Java monitoring, clone and checkout the `java-monitoring`, or download the archive [here] (https://github.com/splunk/splunk-plugin-eclipse/archive/java-monitoring.zip)
