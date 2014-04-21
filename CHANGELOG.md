@@ -1,5 +1,9 @@
 # Splunk Plug-in for Eclipse
 
+## Version 1.0.1
+
+* Updated Splunk SDK for Java in plugin for version 1.3.
+
 ## Version 1.0
 
 * Switched to Maven for building the Splunk Plug-in for Eclipse.
