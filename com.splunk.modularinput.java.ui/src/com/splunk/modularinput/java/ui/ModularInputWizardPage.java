@@ -28,7 +28,6 @@ public class ModularInputWizardPage extends WizardPage {
 	}
 	
 	public class ProjectSettings extends Composite {
-
 		public ProjectSettings(Composite parent, int style) {
 			super(parent, style);
 			setLayout(new GridLayout(1, true));
@@ -136,6 +135,8 @@ public class ModularInputWizardPage extends WizardPage {
 				options.put("appid", projectName.getWidget().getText());
 				if ("".equals(options.get("appid"))) {
 					pushStatus("appid", "Project name cannot be empty.");
+				} else if (!options.get("appid").matches("[\\.A-Za-z0-9_]+")) {
+					pushStatus("appid", "Project name can only contain letters, numbers, '.', and '_'.");					
 				} else {
 					popStatus("appid");
 				}

@@ -13,9 +13,6 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>com.splunk.agent</module>
-    <module>com.splunk.agent.launcher</module>
-    <module>com.splunk.agent.launcher.ui</module>
     <module>com.splunk.project.java</module>
     <module>com.splunk.project.java.ui</module>
     <module>com.splunk.project.java.templates</module>
