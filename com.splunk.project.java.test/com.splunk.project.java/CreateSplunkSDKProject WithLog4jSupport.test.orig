@@ -2,13 +2,17 @@
 Format-Version: 1.0
 Q7-vendor: www.xored.com/q7
 Contexts: _TwP1gNISEeK_QsHHknmtsA,_QI0IoNK-EeK_QsHHknmtsA
-Element-Name: CreateSplunkSDKProjectWithLogbackSupport
+Element-Name: CreateSplunkSDKProjectWithLog4jSupport
 Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
-Id: _A810cILYEeOryLhV4BhAhQ
+Id: _4Lo38IOwEeO3bfeX9vv0lg
 Q7-Runtime-Version: 1.3.9.201310250528
-Save-Time: 4/24/14 3:15 PM
+<<<<<<< HEAD:com.splunk.project.java.test/com.splunk.project.java/CreateSplunkSDKProject WithLog4jSupport.test
+Save-Time: 4/24/14 2:56 PM
+=======
+Save-Time: 4/21/14 3:55 PM
+>>>>>>> 06c533fd89e2c5a63de7f2786f0e350257a1831a:com.splunk.project.java.test/com.splunk.project.java/CreateSplunkSDKProject WithLog4jkSupport.test
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -21,29 +25,45 @@ with [get-window New] {
     get-button "Next >" | click
 }
 with [get-window -class WizardDialog] {
-    get-editbox -after [get-label "Project name:"] | set-text CreateSplunkSDKProjectWithLogbackSupport
-    get-group "Add support for logging libraries" | get-button "Add logging support:" | check
-    get-button Logback | click    
-    get-button "Next >" | click
+    get-editbox -after [get-label "Project name:"] | set-text CreateSplunkSDKJavaProjWithLog4jSupport
+}
+
+with [get-window -class WizardDialog] {
+    with [get-group "Add support for logging libraries"] {
+        get-button "Add logging support:" | check
+        get-button "Log4j 2" | click
+    }
     get-button Finish | click
 }
-
 with [get-view "Project Explorer" | get-tree] {
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/logback-classic.jar" 
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/logback-core.jar"
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/slf4j-api.jar" 
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/splunk-library-javalogging.jar" 
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/commons-lang-2.4.jar" 
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/config/logback.xml"
+<<<<<<< HEAD:com.splunk.project.java.test/com.splunk.project.java/CreateSplunkSDKProject WithLog4jSupport.test
+	get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-core.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-api.jar"
+	get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/slf4j-api.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-slf4j-impl.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/splunk-library-javalogging.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/commons-lang-2.4.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/config/log4j2.xml"
+=======
+    select "CreateSplunkSDKJavaProjWithLog4jkSupport/lib/log4j-1.2.16.jar" | double-click
+    select "CreateSplunkSDKJavaProjWithLog4jkSupport/lib/slf4j-api-1.6.4.jar" | double-click
+    select "CreateSplunkSDKJavaProjWithLog4jkSupport/lib/slf4j-log4j12-1.6.4.jar" | double-click
+    select "CreateSplunkSDKJavaProjWithLog4jkSupport/lib/splunk-library-javalogging.jar" | double-click
+    select "CreateSplunkSDKJavaProjWithLog4jkSupport/lib/commons-lang-2.4.jar" | double-click
+    select "CreateSplunkSDKJavaProjWithLog4jkSupport/log4j.properties" | double-click
+>>>>>>> 06c533fd89e2c5a63de7f2786f0e350257a1831a:com.splunk.project.java.test/com.splunk.project.java/CreateSplunkSDKProject WithLog4jkSupport.test
 }
 
-
 get-view "Project Explorer" | get-tree 
-    | select "CreateSplunkSDKProjectWithLogbackSupport/src/\\(default package\\)/Program.java" | double-click
+    | get-item "CreateSplunkSDKJavaProjWithLog4jSupport/src/\\(default package\\)/Program.java"
 
+get-editor "Program.java" | get-text-viewer | set-focus
+get-menu "Edit/Select All" | click
+get-menu "Edit/Delete" | click
+    
 with [get-editor "Program.java" | get-text-viewer] {
-  set-text ""
-  set-text "import java.io.IOException;\n"+
+  set-focus
+  set-value "import java.io.IOException;\n"+
 "import org.slf4j.*;\n"+
 "import java.io.InputStream;\n"+
 "import com.splunk.Args;\n"+
@@ -110,15 +130,18 @@ with [get-editor "Program.java" | get-text-viewer] {
 "		tcpInput.remove();\n"+
 "		inputs.refresh();		\n"+
 "		\n"+
-"		System.out.println(\"CreateSplunkSDKProjectWithLogbackSupport Test Pass!\");\n"+
+"		System.out.println(\"CreateSplunkSDKJavaProjWithLog4jSupport Test Pass!\");\n"+
 "	}\n"+
 "}\n"
 
 }
 
+
+
 get-button "Save (M1+S)" | click
 get-view "Project Explorer" | get-tree 
-    | select "CreateSplunkSDKProjectWithLogbackSupport/src/\\(default package\\)/Program.java" 
-    | get-menu "Run As/1 Java Application" | click  
-get-view Console | get-text-viewer | get-property text | equals "CreateSplunkSDKProjectWithLogbackSupport Test Pass!" | verify-true
+    | select "CreateSplunkSDKJavaProjWithLog4jSupport/src/\\(default package\\)/Program.java" 
+    | get-menu "Run As/1 Java Application" | click
+get-view Console | get-text-viewer | get-property text | equals "CreateSplunkSDKJavaProjWithLog4jSupport Test Pass!" 
+    | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
