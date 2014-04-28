@@ -11,12 +11,6 @@
   <packaging>eclipse-plugin</packaging>
   
   <dependencies>
-  	<dependency>
-  		<groupId>com.splunk.dev</groupId>
-  		<artifactId>splunk-library-javalogging</artifactId>
-  		<version>1.0.0</version>
-  		<scope>test</scope>
-  	</dependency>
   	 <dependency>
 		<groupId>org.apache.logging.log4j</groupId>
 		<artifactId>log4j-api</artifactId>
@@ -69,13 +63,6 @@
 					</goals>
 					<configuration>
 						<artifactItems>
-							<artifactItem>
-								<groupId>com.splunk.dev</groupId>
-								<artifactId>splunk-library-javalogging</artifactId>
-								<version>1.0.0</version>
-								<type>jar</type>
-								<overWrite>true</overWrite>
-							</artifactItem>
 							<artifactItem>
 								<groupId>org.apache.logging.log4j</groupId>
 								<artifactId>log4j-api</artifactId>
