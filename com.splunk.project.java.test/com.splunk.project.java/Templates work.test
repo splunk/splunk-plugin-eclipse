@@ -7,8 +7,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _817tQNK-EeK_QsHHknmtsA
-Q7-Runtime-Version: 1.3.9.201310250528
-Save-Time: 12/13/13 11:02 AM
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 4/28/14 3:07 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -41,26 +41,17 @@ with [get-editor "AProgram.java" | get-text-viewer] {
     set-caret-pos 9 1
     key-type Tab
     type-text splcon
-    key-type "M1+SPACE"
+    key-type "Ctrl+SPACE"
+    key-type "ENTER"
 }
-get-editor "AProgram.java" | get-editbox | get-property text | equals "import com.splunk.Service;\n"
-    + "import com.splunk.ServiceArgs;\n\n\n"
-    + "public class AProgram {\n\n"
-    + "\t/**\n"
-    + "\t * @param args\n"
-    + "\t */\n"
-    + "\tpublic static void main(String[] args) {\n"
-    + "\t\t// TODO Auto-generated method stub\n"
-    + "\t\t// Create login parameters. We suggest finding\n"
-    + "\t\t// a better way to store these than hard coding\n"
-    + "\t\t// them in your program for production code.\n"
-    + "\t\tServiceArgs serviceArgs = new ServiceArgs();\n"
-    + "\t\tserviceArgs.setUsername(username);\n"
-    + "\t\tserviceArgs.setPassword(password);\n"
-    + "\t\tserviceArgs.setHost(host);\n"
-    + "\t\tserviceArgs.setPort(port);\n\n"
-    + "\t\t// Create a Service instance and log in with the argument map\n"
-    + "\t\tService service = Service.connect(serviceArgs);\n"
-    + "\t}\n\n"
-    + "}" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains "package abcd;\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains "import com.splunk.Service;\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "import com.splunk.ServiceArgs;\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "ServiceArgs serviceArgs = new ServiceArgs();\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "serviceArgs.setUsername(username);\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "serviceArgs.setPassword(password);\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "serviceArgs.setHost(host);\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "serviceArgs.setPort(port);\n" | verify-true
+get-editor "AProgram.java" | get-editbox | get-property text | contains  "Service service = Service.connect(serviceArgs);\n" | verify-true
+
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
