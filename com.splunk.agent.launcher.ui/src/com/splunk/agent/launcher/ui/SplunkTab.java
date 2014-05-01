@@ -34,6 +34,7 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 	
 	@Override
 	public void createControl(Composite parent) {
+		@SuppressWarnings("restriction")
 		Composite comp = SWTFactory.createComposite(parent, parent.getFont(), 1, 1, GridData.FILL_BOTH);
 
 		GridData gd;
@@ -91,7 +92,7 @@ public class SplunkTab extends AbstractLaunchConfigurationTab implements
 		gd.horizontalSpan = 2;
 		gd.horizontalAlignment = SWT.CENTER;
 		helpLink.setLayoutData(gd);
-		helpLink.setText("See the <A href=\"http://docs.splunk.com/Documentation/Splunk/latest/Data/Monitornetworkports#Add_a_network_input_using_Splunk_Web\">Splunk documentation</A> on how to create a TCP input.");
+		helpLink.setText("For more information about Java logging with the Splunk Plug-in for Eclipse, see the <a href=\"http://dev.splunk.com/goto/tcpinputs\">Splunk documentation</a>");
 		helpLink.addSelectionListener(new SelectionListener() {
 			
 			@Override

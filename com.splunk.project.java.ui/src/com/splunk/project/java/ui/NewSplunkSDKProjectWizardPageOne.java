@@ -103,9 +103,9 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		optionalLoggingGroup.setLayout(new GridLayout(1, false));
 		
 		final Label explanationLabel = new Label(optionalLoggingGroup, SWT.WRAP);
-		explanationLabel.setText("The Splunk plug-in for Eclipse can set up " +
+		explanationLabel.setText("The Splunk\u00AE Plug-in for Eclipse can set up " +
 				"a logging library and code to log to Splunk and to create " +
-				"logging events following Splunk's Common Information Management " +
+				"logging events following Splunk's Common Information Model (CIM) " +
 				"recommendations.");
 		GridData gridData = new GridData(GridData.FILL, SWT.FILL, true, true);
 		gridData.widthHint = convertWidthInCharsToPixels(50);
@@ -137,7 +137,7 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		});
 		
 		final Button log4jButton = new Button(radioButtonRow, SWT.RADIO);
-		log4jButton.setText("Log4j");
+		log4jButton.setText("Log4j 2");
 		log4jButton.setEnabled(false);		
 		log4jButton.addSelectionListener(new SelectionListener() {
 			@Override
@@ -217,6 +217,26 @@ public class NewSplunkSDKProjectWizardPageOne extends
 		
 		Control optionalLoggingControl = createOptionalLoggingJarsControl(composite);
 		optionalLoggingControl.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		final Button generateInitialCode = new Button(composite, SWT.CHECK);
+		generateInitialCode.setText("Generate a working example");
+		generateInitialCode.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		SelectionListener generateInitialCodeListener = new SelectionListener() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				widgetDefaultSelected(e);
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent e) {
+				options.generateExample = generateInitialCode.getSelection();
+			}
+		};
+		
+		generateInitialCode.addSelectionListener(generateInitialCodeListener);
+		generateInitialCode.setSelection(true);
+		generateInitialCodeListener.widgetDefaultSelected(null);
 
 		composite.setSize(composite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 		subparent.setContent(composite);

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Splunk plug-in for Eclipse - Modular input UI
+Bundle-SymbolicName: com.splunk.modularinput.java.ui;singleton:=true
+Bundle-Version: 1.0.1
+Bundle-Activator: com.splunk.modularinput.java.ui.Activator
+Bundle-Vendor: Splunk, Inc.
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ com.splunk.modularinput.java.behavior,
+ org.eclipse.ui.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.ui.actions

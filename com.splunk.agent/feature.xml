@@ -2,7 +2,7 @@
 <feature
       id="com.splunk.agent"
       label="Splunk monitoring for Java applications"
-      version="0.2"
+      version="1.0.1"
       provider-name="Splunk, Inc.">
 
    <description>

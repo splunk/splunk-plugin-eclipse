@@ -17,7 +17,7 @@ under the License.
 <feature
       id="com.splunk.project.java"
       label="Splunk SDK for Java support for Eclipse"
-      version="0.2"
+      version="1.0.1"
       provider-name="Splunk, Inc.">
 
    <description>
@@ -209,11 +209,11 @@ under the License.
    <requires>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.ui.editors" version="3.8.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jdt.core" version="3.8.3" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jdt.ui" version="3.8.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.ui" version="3.6.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jface.text"/>
-      <import plugin="org.eclipse.core.resources" version="3.8.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.6.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.ide"/>
    </requires>
 

@@ -1,0 +1,12 @@
+[launcher]
+author = $author$
+$if(description)$description = $description$
+$endif$version = $version$
+
+[package]
+id = $appid$
+
+[ui]
+is_visible = $is_visible$
+$if(label)$label = $label$
+$endif$

@@ -1,0 +1,128 @@
+--- Q7 testcase ---
+Format-Version: 1.0
+Q7-vendor: www.xored.com/q7
+Contexts: _TwP1gNISEeK_QsHHknmtsA,_QI0IoNK-EeK_QsHHknmtsA
+Element-Name: CreateSplunkSDKProjectWithLog4jSupport
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _4Lo38IOwEeO3bfeX9vv0lg
+Q7-Runtime-Version: 1.3.9.201310250528
+Save-Time: 4/24/14 3:14 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-menu "File/New/Other..." | click
+with [get-window New] {
+    get-tree | select "Splunk/Splunk SDK for Java project"
+    get-button "Next >" | click
+}
+with [get-window -class WizardDialog] {
+    get-editbox -after [get-label "Project name:"] | set-text CreateSplunkSDKJavaProjWithLog4jSupport
+}
+
+with [get-window -class WizardDialog] {
+    with [get-group "Add support for logging libraries"] {
+        get-button "Add logging support:" | check
+        get-button "Log4j 2" | click
+    }
+    get-button Finish | click
+}
+with [get-view "Project Explorer" | get-tree] {
+	get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-core.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-api.jar"
+	get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/slf4j-api.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-slf4j-impl.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/splunk-library-javalogging.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/commons-lang-2.4.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/config/log4j2.xml"
+}
+
+get-view "Project Explorer" | get-tree 
+    | get-item "CreateSplunkSDKJavaProjWithLog4jSupport/src/\\(default package\\)/Program.java"
+
+with [get-editor "Program.java" | get-text-viewer] {
+  set-text ""
+  set-text "import java.io.IOException;\n"+
+"import org.slf4j.*;\n"+
+"import java.io.InputStream;\n"+
+"import com.splunk.Args;\n"+
+"import com.splunk.Event;\n"+
+"import com.splunk.InputCollection;\n"+
+"import com.splunk.InputKind;\n"+
+"import com.splunk.ResultsReaderXml;\n"+
+"import com.splunk.Service;\n"+
+"import com.splunk.ServiceArgs;\n"+
+"import com.splunk.TcpInput;\n"+
+"\n"+
+"public class Program {\n"+
+"	public static void main(String[] args) {\n"+
+"		ServiceArgs serviceArgs = new ServiceArgs();\n"+
+"		serviceArgs.setUsername(\"admin\");\n"+
+"		serviceArgs.setPassword(\"changeme\");\n"+
+"		serviceArgs.setHost(\"localhost\");\n"+
+"		serviceArgs.setPort(8089);\n"+
+"		Service service = Service.connect(serviceArgs);	\n"+
+"		\n"+
+"		Args oneshotSearchArgs  = new Args();\n"+
+"		oneshotSearchArgs.put(\"owner\", \"admin\");\n"+
+"		oneshotSearchArgs.put(\"app\", \"search\");\n"+
+"\n"+
+"		String tcpPort = \"5150\";\n"+
+"		InputCollection inputs = service.getInputs(oneshotSearchArgs);\n"+
+"		TcpInput tcpInput = (TcpInput) inputs.get(tcpPort);\n"+
+"		\n"+
+"		if(tcpInput!=null){\n"+
+"			// remove TCP input\n"+
+"			tcpInput.remove();\n"+
+"			inputs.refresh();		\n"+
+"		}\n"+
+"		\n"+
+"		inputs.create(tcpPort, InputKind.Tcp);\n"+
+"		tcpInput = (TcpInput) inputs.get(tcpPort);\n"+
+"		tcpInput.update();\n"+
+"		\n"+
+"//		Logger logger=LoggerFactory.getLogger(\"splunk.logger\");\n"+
+"//		logger.trace(\"field=newLoggerTrace1\");\n"+
+"//		logger.trace(\"field=newLoggerTrace2\");\n"+
+"//		logger.trace(\"field=newLoggerTrace3\");\n"+
+"//		\n"+
+"//		InputStream resultsStream = service.oneshotSearch(\"search field=newLoggerTrace* | head 5\",\n"+
+"//				oneshotSearchArgs);\n"+
+"//\n"+
+"//		try {\n"+
+"//			ResultsReaderXml resultsReader = new ResultsReaderXml(resultsStream);\n"+
+"//\n"+
+"//			for (Event event : resultsReader) {\n"+
+"//				// Process each event\n"+
+"//				for (String key: event.keySet()) {\n"+
+"//				   System.out.println(key + \": \" + event.get(key));\n"+
+"//				}\n"+
+"//				System.out.println(\"\");\n"+
+"//			}\n"+
+"//\n"+
+"//			resultsReader.close();\n"+
+"//		} catch (IOException e) {\n"+
+"//			e.printStackTrace();\n"+
+"//		}	\n"+
+"		\n"+
+"		// remove TCP input\n"+
+"		tcpInput.remove();\n"+
+"		inputs.refresh();		\n"+
+"		\n"+
+"		System.out.println(\"CreateSplunkSDKJavaProjWithLog4jSupport Test Pass!\");\n"+
+"	}\n"+
+"}\n"
+
+}
+
+get-button "Save (M1+S)" | click
+get-view "Project Explorer" | get-tree 
+    | select "CreateSplunkSDKJavaProjWithLog4jSupport/src/\\(default package\\)/Program.java" 
+    | get-menu "Run As/1 Java Application" | click
+get-view Console | get-text-viewer | get-property text | equals "CreateSplunkSDKJavaProjWithLog4jSupport Test Pass!" 
+    | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

@@ -119,8 +119,8 @@ public class MonitoredLaunchConfigurationTypeDelegate extends
 		String args;
 		try {
 			args = super.getVMArguments(configuration) + 
-					" -javaagent:" + jarFile.getCanonicalPath() +
-					"=\"" + propertiesFile.getCanonicalPath() + "\"" +
+					" \"-javaagent:" + jarFile.getCanonicalPath() +
+					"=" + propertiesFile.getCanonicalPath() + "\"" +
 					// This forces JDK 7 to use the JDK 6 bytecode verifier
 					// so that the splunkagent.jar will work with both.
 					" -XX:-UseSplitVerifier";	
