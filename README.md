@@ -1,6 +1,6 @@
 #Splunk Plug-in for Eclipse
 
-#### Version 1.0.1
+#### Version 1.0.2
 
 April 2014
 
