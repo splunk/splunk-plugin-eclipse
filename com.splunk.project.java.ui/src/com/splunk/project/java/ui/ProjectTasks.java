@@ -24,7 +24,7 @@ import com.splunk.project.java.ui.SplunkSDKProjectWizard.LoggingFramework;
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
 
 public class ProjectTasks {
-	public final static String splunkSDKJarFile = "splunk-sdk-java.jar";
+	public final static String splunkSDKJarFile = "splunk-1.3.1.jar";
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.1.jar";
 	

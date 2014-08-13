@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Splunk plugin for Eclipse - Modular input behavior
 Bundle-SymbolicName: com.splunk.modularinput.java.behavior;singleton:=true
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
 Bundle-Activator: com.splunk.modularinput.java.behavior.Activator
 Bundle-Vendor: Splunk, Inc.
 Require-Bundle: org.eclipse.ui,
