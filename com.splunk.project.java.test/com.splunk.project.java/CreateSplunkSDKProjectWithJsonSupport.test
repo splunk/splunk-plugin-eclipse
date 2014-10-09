@@ -29,9 +29,9 @@ with [get-window -class WizardDialog] {
     get-button Finish | click
 }
 with [get-view "Project Explorer" | get-tree] {
-    get-item "CreateSplunkSDKProjectWithJsonSupport/lib/gson-2.1.jar"
+    get-item "CreateSplunkSDKProjectWithJsonSupport/lib/gson-2.2.4.jar"
     get-item "CreateSplunkSDKProjectWithJsonSupport/lib/splunk-sdk-java.jar"
-    get-item "CreateSplunkSDKProjectWithJsonSupport/gson-2.1.jar"
+    get-item "CreateSplunkSDKProjectWithJsonSupport/gson-2.2.4.jar"
     get-item "CreateSplunkSDKProjectWithJsonSupport/splunk-sdk-java.jar"
     get-item "CreateSplunkSDKProjectWithJsonSupport/src/\\(default package\\)/Program.java"
 }

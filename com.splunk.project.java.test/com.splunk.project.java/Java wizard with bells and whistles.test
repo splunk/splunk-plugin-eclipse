@@ -36,7 +36,7 @@ with [get-view "Project Explorer" | get-tree] {
 with [get-view "Project Explorer" | get-tree] {
     get-item "abcd/splunk-sdk-java.jar" | get-property caption | equals "splunk-sdk-java.jar" | verify-true
     get-item "abcd/opencsv-2.3.jar" | get-property caption | equals "opencsv-2.3.jar" | verify-true
-    get-item "abcd/gson-2.1.jar" | get-property caption | equals "gson-2.1.jar" | verify-true
+    get-item "abcd/gson-2.2.4.jar" | get-property caption | equals "gson-2.2.4.jar" | verify-true
     get-item "abcd/logback-classic.jar" | get-property caption | equals "logback-classic.jar" | verify-true
     get-item "abcd/logback-core.jar" | get-property caption | equals "logback-core.jar" | verify-true
     get-item "abcd/slf4j-api.jar" | get-property caption | equals "slf4j-api.jar" | verify-true
