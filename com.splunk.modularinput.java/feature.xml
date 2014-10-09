@@ -2,14 +2,14 @@
 <feature
       id="com.splunk.modularinput.java"
       label="Splunk modular inputs in Java"
-      version="1.0.1"
+      version="1.0.2"
       provider-name="Splunk, Inc.">
 
    <description url="http://dev.splunk.com/view/splunk-plugin-eclipse/SP-CAAAEQP">
       Provides support for creating Splunk apps containing modular inputs written in Java, including all the necessary scaffolding.
    </description>
 
-  <copyright>
+   <copyright>
       Copyright 2013 Splunk, Inc.
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;):
 you may
@@ -187,7 +187,7 @@ under the License.
       incidental, or consequential damages of any character arising as a
       result of this License or out of the use or inability to use the
    </license>
-   
+
    <requires>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.core.runtime"/>
