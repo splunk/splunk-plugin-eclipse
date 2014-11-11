@@ -33,6 +33,7 @@ public class ProjectTasks {
 	protected static final String commonsLangJarFile = "commons-lang-2.4.jar";
 	
 	public final static String defaultProgramFile = "Program.java";
+	public final static String javaUtilLoggingProgramFile = "java-util-logging-Program.java";
 	
 	public final static String[] log4jJarFiles = {
 		"log4j-api.jar",
@@ -211,20 +212,40 @@ public class ProjectTasks {
 		if (options.generateExample) {
 			if (javaProject.findPackageFragment(javaProject.getPath()) != null) {
 				// Using the root of the project as a source directory.
-				addFileToProject(
-						project, 
-						defaultProgramFile, 
-						defaultProgramFile, 
-						new SubProgressMonitor(monitor, 100)
-						);
+				if (options.loggingSupport == LoggingFramework.JAVA_UTIL_LOGGING) {
+					addFileToProject(
+							project, 
+							javaUtilLoggingProgramFile, 
+							defaultProgramFile, 
+							new SubProgressMonitor(monitor, 100)
+							);
+				}
+				else {
+					addFileToProject(
+							project, 
+							defaultProgramFile, 
+							defaultProgramFile, 
+							new SubProgressMonitor(monitor, 100)
+							);
+				}
 			} else if (javaProject.getPackageFragmentRoot(javaProject.getPath() + File.separator + "src") != null) {
 				// Use the src/ directory.
-				addFileToProject(
-						project,
-						defaultProgramFile, 
-						"src" + File.separator + defaultProgramFile, 
-						new SubProgressMonitor(monitor, 100)
-						);
+				if (options.loggingSupport == LoggingFramework.JAVA_UTIL_LOGGING) {
+					addFileToProject(
+							project,
+							javaUtilLoggingProgramFile, 
+							"src" + File.separator + defaultProgramFile, 
+							new SubProgressMonitor(monitor, 100)
+							);
+				}
+				else {
+					addFileToProject(
+							project,
+							defaultProgramFile, 
+							"src" + File.separator + defaultProgramFile, 
+							new SubProgressMonitor(monitor, 100)
+							);
+				}
 			}
 		}
 		// If neither case applies, the user has done customization,
