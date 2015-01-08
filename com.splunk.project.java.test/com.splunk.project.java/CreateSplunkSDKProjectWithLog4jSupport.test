@@ -48,7 +48,7 @@ with [get-editor "Program.java" | get-text-viewer] {
   set-text ""
   set-text "import java.io.IOException;\n"+
 "import org.apache.commons.lang.time.StopWatch;\n"+
-"import org.slf4j.*;\n"+
+"import org.apache.logging.log4j.*;\n"+
 "import java.io.InputStream;\n"+
 "import java.util.Date;\n"+
 "import com.splunk.Args;\n"+
@@ -87,7 +87,7 @@ with [get-editor "Program.java" | get-text-viewer] {
 "		tcpInput = (TcpInput) inputs.get(tcpPort);\n"+
 "		tcpInput.update();\n"+
 "		\n"+
-"		Logger logger=LoggerFactory.getLogger(\"splunk.logger\");\n"+
+"		Logger logger = LogManager.getLogger(\"splunk.logger\");\n"+
 "		Date date = new Date();\n"+
 "		String searchStr = \"field=log4j-\" + date.toString();\n"+
 "		logger.error(searchStr);\n"+
