@@ -4,7 +4,7 @@
 
 ### Breaking changes
 
-* Updated gson libarary in plugin for version 2.2.4.
+* Updated gson library in plugin for version 2.2.4.
 
 ### Bug fixes
 
@@ -15,7 +15,7 @@
 
 * Example code for `java.util.logging` projects now has a comment about setting the `java.util.logging.config.file` JVM argument.
 * Updated Splunk SDK for Java in plugin for version 1.3.2.
-* Updated Splunk Logging for Java in plugin for version 1.0.1.
+* Updated Splunk Logging Library for Java in plugin for version 1.0.1.
 * General test improvements.
 
 ## Version 1.0.2
