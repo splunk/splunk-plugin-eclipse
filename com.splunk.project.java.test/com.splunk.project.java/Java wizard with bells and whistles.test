@@ -40,7 +40,7 @@ with [get-view "Project Explorer" | get-tree] {
     get-item "abcd/logback-classic.jar" | get-property caption | equals "logback-classic.jar" | verify-true
     get-item "abcd/logback-core.jar" | get-property caption | equals "logback-core.jar" | verify-true
     get-item "abcd/slf4j-api.jar" | get-property caption | equals "slf4j-api.jar" | verify-true
-    get-item "abcd/splunk-library-javalogging.jar" | get-property caption | equals "splunk-library-javalogging.jar" | verify-true
+    get-item "abcd/splunk-library-javalogging-1.0.1.jar" | get-property caption | equals "splunk-library-javalogging-1.0.1.jar" | verify-true
 }
 get-view "Project Explorer" | get-tree | get-item "abcd/config/logback.xml" | get-property caption | equals "logback.xml" 
     | verify-true
