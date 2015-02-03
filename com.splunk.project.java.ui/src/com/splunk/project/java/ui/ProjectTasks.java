@@ -24,12 +24,12 @@ import com.splunk.project.java.ui.SplunkSDKProjectWizard.LoggingFramework;
 import com.splunk.project.java.ui.SplunkSDKProjectWizard.SplunkSDKProjectCreationOptions;
 
 public class ProjectTasks {
-	public final static String splunkSDKJarFile = "splunk-sdk-java.jar";
+	public final static String splunkSDKJarFile = "splunk-sdk-java-1.3.2.jar";
 	public final static String csvJarFile = "opencsv-2.3.jar";
 	public final static String jsonJarFile = "gson-2.2.4.jar";
 	
 	public final static String sl4jApiJarFile = "slf4j-api.jar";
-	public final static String splunkLoggingJarFile = "splunk-library-javalogging.jar";
+	public final static String splunkLoggingJarFile = "splunk-library-javalogging-1.0.1.jar";
 	protected static final String commonsLangJarFile = "commons-lang-2.4.jar";
 	
 	public final static String defaultProgramFile = "Program.java";
