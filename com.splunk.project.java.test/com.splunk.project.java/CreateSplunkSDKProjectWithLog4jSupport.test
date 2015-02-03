@@ -36,7 +36,7 @@ with [get-view "Project Explorer" | get-tree] {
     get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-api.jar"
 	get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/slf4j-api.jar"
     get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/log4j-slf4j-impl.jar"
-    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/splunk-library-javalogging.jar"
+    get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/splunk-library-javalogging-1.0.1.jar"
     get-item "CreateSplunkSDKJavaProjWithLog4jSupport/lib/commons-lang-2.4.jar"
     get-item "CreateSplunkSDKJavaProjWithLog4jSupport/config/log4j2.xml"
 }

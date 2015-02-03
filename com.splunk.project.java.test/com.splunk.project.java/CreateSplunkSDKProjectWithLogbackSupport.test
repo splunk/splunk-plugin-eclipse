@@ -32,7 +32,7 @@ with [get-view "Project Explorer" | get-tree] {
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/logback-classic.jar" 
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/logback-core.jar"
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/slf4j-api.jar" 
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/splunk-library-javalogging.jar" 
+    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/splunk-library-javalogging-1.0.1.jar" 
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/commons-lang-2.4.jar" 
     get-item "CreateSplunkSDKProjectWithLogbackSupport/config/logback.xml"
 }

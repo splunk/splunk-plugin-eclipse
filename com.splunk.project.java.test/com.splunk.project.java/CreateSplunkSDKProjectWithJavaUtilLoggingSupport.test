@@ -31,7 +31,7 @@ with [get-window -class WizardDialog] {
 with [get-view "Project Explorer" | get-tree] {
     get-item "CreateSplunkSDKProjectWithJavaUtilLoggingSupport/lib/slf4j-jdk14.jar"
     get-item "CreateSplunkSDKProjectWithJavaUtilLoggingSupport/lib/slf4j-api.jar"
-    get-item "CreateSplunkSDKProjectWithJavaUtilLoggingSupport/lib/splunk-library-javalogging.jar"
+    get-item "CreateSplunkSDKProjectWithJavaUtilLoggingSupport/lib/splunk-library-javalogging-1.0.1.jar"
     get-item "CreateSplunkSDKProjectWithJavaUtilLoggingSupport/lib/commons-lang-2.4.jar"
     get-item "CreateSplunkSDKProjectWithJavaUtilLoggingSupport/config/jdklogging.properties"
 }
