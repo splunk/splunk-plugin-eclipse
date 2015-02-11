@@ -7,8 +7,8 @@ Element-Type: testcase
 Element-Version: 3.0
 External-Reference: 
 Id: _A810cILYEeOryLhV4BhAhQ
-Q7-Runtime-Version: 1.3.9.201310250528
-Save-Time: 4/24/14 3:15 PM
+Q7-Runtime-Version: 1.3.10.201312200736
+Save-Time: 10/14/14 11:40 AM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -32,7 +32,7 @@ with [get-view "Project Explorer" | get-tree] {
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/logback-classic.jar" 
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/logback-core.jar"
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/slf4j-api.jar" 
-    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/splunk-library-javalogging.jar" 
+    get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/splunk-library-javalogging-1.0.1.jar" 
     get-item "CreateSplunkSDKProjectWithLogbackSupport/lib/commons-lang-2.4.jar" 
     get-item "CreateSplunkSDKProjectWithLogbackSupport/config/logback.xml"
 }
@@ -44,8 +44,10 @@ get-view "Project Explorer" | get-tree
 with [get-editor "Program.java" | get-text-viewer] {
   set-text ""
   set-text "import java.io.IOException;\n"+
+"import org.apache.commons.lang.time.StopWatch;\n"+
 "import org.slf4j.*;\n"+
 "import java.io.InputStream;\n"+
+"import java.util.Date;\n"+
 "import com.splunk.Args;\n"+
 "import com.splunk.Event;\n"+
 "import com.splunk.InputCollection;\n"+
@@ -56,7 +58,7 @@ with [get-editor "Program.java" | get-text-viewer] {
 "import com.splunk.TcpInput;\n"+
 "\n"+
 "public class Program {\n"+
-"	public static void main(String[] args) {\n"+
+"	public static void main(String[] args) throws IOException, InterruptedException {\n"+
 "		ServiceArgs serviceArgs = new ServiceArgs();\n"+
 "		serviceArgs.setUsername(\"admin\");\n"+
 "		serviceArgs.setPassword(\"changeme\");\n"+
@@ -68,7 +70,7 @@ with [get-editor "Program.java" | get-text-viewer] {
 "		oneshotSearchArgs.put(\"owner\", \"admin\");\n"+
 "		oneshotSearchArgs.put(\"app\", \"search\");\n"+
 "\n"+
-"		String tcpPort = \"5150\";\n"+
+"		String tcpPort = \"15000\";\n"+
 "		InputCollection inputs = service.getInputs(oneshotSearchArgs);\n"+
 "		TcpInput tcpInput = (TcpInput) inputs.get(tcpPort);\n"+
 "		\n"+
@@ -82,43 +84,57 @@ with [get-editor "Program.java" | get-text-viewer] {
 "		tcpInput = (TcpInput) inputs.get(tcpPort);\n"+
 "		tcpInput.update();\n"+
 "		\n"+
-"//		Logger logger=LoggerFactory.getLogger(\"splunk.logger\");\n"+
-"//		logger.trace(\"field=newLoggerTrace1\");\n"+
-"//		logger.trace(\"field=newLoggerTrace2\");\n"+
-"//		logger.trace(\"field=newLoggerTrace3\");\n"+
-"//		\n"+
-"//		InputStream resultsStream = service.oneshotSearch(\"search field=newLoggerTrace* | head 5\",\n"+
-"//				oneshotSearchArgs);\n"+
-"//\n"+
-"//		try {\n"+
-"//			ResultsReaderXml resultsReader = new ResultsReaderXml(resultsStream);\n"+
-"//\n"+
-"//			for (Event event : resultsReader) {\n"+
-"//				// Process each event\n"+
-"//				for (String key: event.keySet()) {\n"+
-"//				   System.out.println(key + \": \" + event.get(key));\n"+
-"//				}\n"+
-"//				System.out.println(\"\");\n"+
-"//			}\n"+
-"//\n"+
-"//			resultsReader.close();\n"+
-"//		} catch (IOException e) {\n"+
-"//			e.printStackTrace();\n"+
-"//		}	\n"+
+"		Logger logger=LoggerFactory.getLogger(\"splunk.logger\");\n"+
+"		Date date = new Date();\n"+
+"		String searchStr = \"field=logback-\" + date.toString();\n"+
+"		logger.error(searchStr);\n"+
+"		String splunkSearchstr=String.format(\"search %s* \", searchStr);\n"+
+"		boolean found = false;\n"+
+"		StopWatch stopwatch = new StopWatch();\n"+
+"		stopwatch.start();\n"+
+"		stopwatch.split();\n"+
+"		while (!found && stopwatch.getSplitTime() < 100000) {\n"+
+"			InputStream resultsStream = service.oneshotSearch(splunkSearchstr, oneshotSearchArgs);\n"+
+"			ResultsReaderXml resultsReader = new ResultsReaderXml(resultsStream);\n"+
+"			for (Event event : resultsReader) {\n"+
+"				System.out.println(event.getSegmentedRaw());\n"+
+"				found = true;\n"+
+"				break;\n"+
+"			}\n"+
+"			if (found)				\n"+
+"				break;\n"+
+"			else {\n"+
+"				Thread.sleep(1000);\n"+
+"				stopwatch.split();\n"+
+"			}\n"+
+"			resultsReader.close();\n"+
+"			resultsStream.close();\n"+
+"		}\n"+
 "		\n"+
 "		// remove TCP input\n"+
 "		tcpInput.remove();\n"+
 "		inputs.refresh();		\n"+
 "		\n"+
-"		System.out.println(\"CreateSplunkSDKProjectWithLogbackSupport Test Pass!\");\n"+
+"		stopwatch.stop();\n"+	
+"		System.out.println(\"spent \"+stopwatch.getSplitTime());\n"+
+"		if(found){\n"+
+"		System.out.println(\"CreateSplunkSDKProjectWithLogbackSupport Test Pass!\");}\n"+
+"	    //this is a bug: there is a thread blocking issue, so have to call below to force exit all threads;\n"+
+"	    System.exit(0);\n"+
 "	}\n"+
 "}\n"
-
 }
 
 get-button "Save (M1+S)" | click
 get-view "Project Explorer" | get-tree 
     | select "CreateSplunkSDKProjectWithLogbackSupport/src/\\(default package\\)/Program.java" 
     | get-menu "Run As/1 Java Application" | click  
-get-view Console | get-text-viewer | get-property text | equals "CreateSplunkSDKProjectWithLogbackSupport Test Pass!" | verify-true
+
+// this is to force Q7 to wait for a few seconds before the result showed up, otherwise the test will fail.
+repeat -times 20 -command{
+	get-view Console | get-text-viewer | get-property text | Contains "CreateSplunkSDKProjectWithLogbackSupport Test Pass!" 
+}|constrain-max duration 5000
+ 
+get-view Console | get-text-viewer | get-property text | Contains "CreateSplunkSDKProjectWithLogbackSupport Test Pass!" 
+    | verify-true
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

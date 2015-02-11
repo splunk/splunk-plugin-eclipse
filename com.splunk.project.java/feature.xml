@@ -17,7 +17,7 @@ under the License.
 <feature
       id="com.splunk.project.java"
       label="Splunk SDK for Java support for Eclipse"
-      version="1.0.2"
+      version="1.0.3"
       provider-name="Splunk, Inc.">
 
    <description>

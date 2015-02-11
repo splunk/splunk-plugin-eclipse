@@ -31,8 +31,8 @@ with [get-window -class WizardDialog] {
 }
 with [get-view "Project Explorer" | get-tree] {
     get-item "CreateSplunkSDKProjectWithCsvSupport/lib/opencsv-2.3.jar"
-    get-item "CreateSplunkSDKProjectWithCsvSupport/lib/splunk-sdk-java.jar"
-    get-item "CreateSplunkSDKProjectWithCsvSupport/splunk-sdk-java.jar"
+    get-item "CreateSplunkSDKProjectWithCsvSupport/lib/splunk-sdk-java-1.3.2.jar"
+    get-item "CreateSplunkSDKProjectWithCsvSupport/splunk-sdk-java-1.3.2.jar"
     get-item "CreateSplunkSDKProjectWithCsvSupport/opencsv-2.3.jar"
     get-item "CreateSplunkSDKProjectWithCsvSupport/src/\\(default package\\)/Program.java"
 }

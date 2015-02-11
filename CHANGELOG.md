@@ -1,5 +1,23 @@
 # Splunk Plug-in for Eclipse
 
+## Version 1.0.3
+
+### Breaking changes
+
+* Updated gson library in plugin for version 2.2.4.
+
+### Bug fixes
+
+* Fixed a hanging/blocking thread issue with the support for logback.
+* Fixed a typo in the log4j2 configuration template.
+
+### Minor changes
+
+* Example code for `java.util.logging` projects now has a comment about setting the `java.util.logging.config.file` JVM argument.
+* Updated Splunk SDK for Java in plugin for version 1.3.2.
+* Updated Splunk Logging Library for Java in plugin for version 1.0.1.
+* General test improvements.
+
 ## Version 1.0.2
 
 * Updated Splunk SDK for Java in plugin for version 1.3.1

@@ -34,13 +34,13 @@ with [get-view "Project Explorer" | get-tree] {
     get-item "abcd/src" | get-property index | equals 0 | verify-true
 }
 with [get-view "Project Explorer" | get-tree] {
-    get-item "abcd/splunk-sdk-java.jar" | get-property caption | equals "splunk-sdk-java.jar" | verify-true
+    get-item "abcd/splunk-sdk-java-1.3.2.jar" | get-property caption | equals "splunk-sdk-java-1.3.2.jar" | verify-true
     get-item "abcd/opencsv-2.3.jar" | get-property caption | equals "opencsv-2.3.jar" | verify-true
-    get-item "abcd/gson-2.1.jar" | get-property caption | equals "gson-2.1.jar" | verify-true
+    get-item "abcd/gson-2.2.4.jar" | get-property caption | equals "gson-2.2.4.jar" | verify-true
     get-item "abcd/logback-classic.jar" | get-property caption | equals "logback-classic.jar" | verify-true
     get-item "abcd/logback-core.jar" | get-property caption | equals "logback-core.jar" | verify-true
     get-item "abcd/slf4j-api.jar" | get-property caption | equals "slf4j-api.jar" | verify-true
-    get-item "abcd/splunk-library-javalogging.jar" | get-property caption | equals "splunk-library-javalogging.jar" | verify-true
+    get-item "abcd/splunk-library-javalogging-1.0.1.jar" | get-property caption | equals "splunk-library-javalogging-1.0.1.jar" | verify-true
 }
 get-view "Project Explorer" | get-tree | get-item "abcd/config/logback.xml" | get-property caption | equals "logback.xml" 
     | verify-true
