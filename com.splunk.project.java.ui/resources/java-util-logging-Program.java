@@ -14,7 +14,7 @@ public class Program {
 	// The code below connects to a Splunk instance, runs a search,
 	// and prints out the results in a crude form.
 	
-	/* In order to enable java.util.logging support, add the folling VM argument
+	/* In order to enable java.util.logging support, add the following VM argument
 	 * to this project's run configuration:
 	 * 
 	 * -Djava.util.logging.config.file=config/jdklogging.properties
