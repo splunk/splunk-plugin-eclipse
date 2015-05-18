@@ -2,3 +2,5 @@
 *~
 */target
 .idea
+splunk-update-site/*/
+splunk-update-site/*.jar
