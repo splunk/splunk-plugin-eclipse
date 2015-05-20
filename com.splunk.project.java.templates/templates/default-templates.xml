@@ -416,9 +416,9 @@ reader.close();</template>
      id="com.splunk.project.java.templates.cimdebug"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.debug(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkCimLogEvent)}logger.debug(new SplunkCimLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
-     addPair(${key}, ${value});
+     addField(${key}, ${value});
 }}.toString());</template>
 
 <template name="spogerror"
@@ -426,9 +426,9 @@ reader.close();</template>
      id="com.splunk.project.java.templates.cimerror"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.error(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkCimLogEvent)}logger.error(new SplunkCimLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
-     addPair(${key}, ${value});
+     addField(${key}, ${value});
 }}.toString());</template>
     
 <template name="spoginfo"
@@ -436,9 +436,9 @@ reader.close();</template>
      id="com.splunk.project.java.templates.ciminfo"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.info(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkCimLogEvent)}logger.info(new SplunkCimLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
-     addPair(${key}, ${value});
+     addField(${key}, ${value});
 }}.toString());</template>    
 
 <template name="spogtrace"
@@ -446,9 +446,9 @@ reader.close();</template>
      id="com.splunk.project.java.templates.cimtrace"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.trace(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkCimLogEvent)}logger.trace(new SplunkCimLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
-     addPair(${key}, ${value});
+     addField(${key}, ${value});
 }}.toString());</template>
     
 <template name="spogwarn"
@@ -456,9 +456,9 @@ reader.close();</template>
      id="com.splunk.project.java.templates.cimwarn"
      context="java"
      enabled="true"
-     autoinsert="true">${:import(com.splunk.logging.SplunkLogEvent)}logger.warn(new SplunkLogEvent(${eventName}, ${eventId}) {{
+     autoinsert="true">${:import(com.splunk.logging.SplunkCimLogEvent)}logger.warn(new SplunkCimLogEvent(${eventName}, ${eventId}) {{
     // TODO Auto-generated body
-     addPair(${key}, ${value});
+     addField(${key}, ${value});
 }}.toString());</template>
 
 <!-- Time span templates for SearchJobArgs -->

@@ -8,12 +8,12 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>com.xored.q7.core.builder.q7Builder</name>
+			<name>org.eclipse.rcptt.core.builder.q7Builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.xored.q7.core.q7nature</nature>
+		<nature>org.eclipse.rcptt.core.rcpttnature</nature>
 	</natures>
 </projectDescription>

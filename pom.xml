@@ -7,7 +7,7 @@
   </properties>
   <groupId>com.splunk</groupId>
   <artifactId>splunk-plugin-eclipse</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <packaging>pom</packaging>
   <modules>
     <module>com.splunk.project.java</module>
