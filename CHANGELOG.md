@@ -1,5 +1,12 @@
 # Splunk Plug-in for Eclipse
 
+## Version 1.0.4
+
+### Minor changes
+
+* Fixed syntax errors in snippets.
+* Changed test framework to Eclipse RCPTT, the new name for Q7.
+
 ## Version 1.0.3
 
 ### Breaking changes
