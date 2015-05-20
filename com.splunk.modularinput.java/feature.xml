@@ -2,7 +2,7 @@
 <feature
       id="com.splunk.modularinput.java"
       label="Splunk modular inputs in Java"
-      version="1.0.3"
+      version="1.0.4"
       provider-name="Splunk, Inc.">
 
    <description url="http://dev.splunk.com/view/splunk-plugin-eclipse/SP-CAAAEQP">

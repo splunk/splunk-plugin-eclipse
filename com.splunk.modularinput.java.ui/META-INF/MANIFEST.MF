@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Splunk plug-in for Eclipse - Modular input UI
 Bundle-SymbolicName: com.splunk.modularinput.java.ui;singleton:=true
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 Bundle-Activator: com.splunk.modularinput.java.ui.Activator
 Bundle-Vendor: Splunk, Inc.
 Require-Bundle: org.eclipse.ui,
